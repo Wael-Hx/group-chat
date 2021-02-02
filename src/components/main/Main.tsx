@@ -1,5 +1,6 @@
 import AnimatedContainer from "../styled/AnimatedContainer";
 import Sidebar from "../styled/Sidebar";
+import CommunitySideBar from "./CommunitySideBar";
 
 const Main = () => {
   return (
@@ -15,7 +16,9 @@ const Main = () => {
         height="100%"
         elevation={0}
         backgroundColor="#141031"
-      ></Sidebar>
+      >
+        <CommunitySideBar />
+      </Sidebar>
     </AnimatedContainer>
   );
 };
