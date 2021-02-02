@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: ({ backgroundColor }: any) => backgroundColor ?? "inherit",
     width: ({ width }: any) => width ?? "auto",
     height: ({ height }: any) => height ?? "auto",
+    display: "flex",
   },
 }));
 
