@@ -3,7 +3,7 @@ import SendIcon from "@material-ui/icons/Send";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: "2px 4px",
+    padding: "7px 4px",
     display: "flex",
     alignItems: "center",
     width: "100%",
@@ -12,16 +12,14 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     flex: 1,
-    backgroundColor: theme.palette.primary.main,
     padding: "0 5px",
-    color: "white",
   },
   iconButton: {
     padding: 5,
     backgroundColor: theme.palette.primary.main,
     borderRadius: 5,
     "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: "transparent",
     },
   },
   divider: {
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 2,
   },
   iconColor: {
-    color: "silver",
+    color: theme.palette.primary.light,
   },
 }));
 
@@ -38,13 +36,9 @@ const IconInput = () => {
 
   return (
     <form className={classes.root}>
-      <InputBase className={classes.input} />
+      <InputBase placeholder="message..." className={classes.input} />
       <Divider className={classes.divider} />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
-      >
+      <IconButton type="submit" className={classes.iconButton}>
         <SendIcon classes={{ root: classes.iconColor }} />
       </IconButton>
     </form>
