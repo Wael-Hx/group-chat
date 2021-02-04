@@ -4,6 +4,7 @@ import StyledAvatar from "../styled/StyledAvatar";
 import StyledTab from "../styled/StyledTab";
 import StyledTabs from "../styled/StyledTabs";
 import TabPanel from "../styled/TabPanel";
+import ChatSections from "./ChatSections";
 
 const CommunitySideBar = () => {
   const [tab, setTab] = useState(0);
@@ -49,12 +50,14 @@ const CommunitySideBar = () => {
           height="20%"
           cover="https://121clicks.com/wp-content/uploads/2019/07/landscape_photography_course_ian_plant_01.jpg"
         />
+        <ChatSections />
       </TabPanel>
       <TabPanel value={tab} index={1}>
         <BackgroundImg
           height="20%"
           cover="https://www.northlandscapes.com/files/images/portfolio-2020/northlandscapes-antarctica-a-faint-resemblance-cover.jpg"
         />
+        <ChatSections />
       </TabPanel>
     </>
   );
