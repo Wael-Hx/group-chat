@@ -1,7 +1,7 @@
 import { makeStyles, Paper, PaperProps } from "@material-ui/core";
 
 interface PaperContainerProps {
-  backgroundColor?: "main" | "dark";
+  backgroundColor?: "main" | "dark" | "light" | "contrastText";
   width?: string;
   height?: string;
 }
@@ -9,7 +9,7 @@ interface PaperContainerProps {
 const useStyles = makeStyles((theme) => ({
   sidebar: {
     backgroundColor: (styleProps: PaperContainerProps) =>
-      theme.palette.secondary[styleProps.backgroundColor || "main"],
+      theme.palette.primary[styleProps.backgroundColor || "main"],
     width: ({ width }: any) => width ?? "auto",
     height: ({ height }: any) => height ?? "auto",
     display: "flex",
