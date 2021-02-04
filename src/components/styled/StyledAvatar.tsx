@@ -5,6 +5,7 @@ const useStyles = makeStyles({
   avatar: {
     width: (styleProps: StyledAvatarProps) => 8 * styleProps.size,
     height: (styleProps: StyledAvatarProps) => 8 * styleProps.size,
+    border: "1px solid silver",
   },
 });
 
