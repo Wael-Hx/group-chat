@@ -1,14 +1,15 @@
 import { makeStyles, Tabs, TabsProps } from "@material-ui/core";
 import { FC } from "react";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   tabs: {
     marginTop: "7%",
   },
   indicator: {
-    backgroundColor: "#643F89",
+    backgroundColor: theme.palette.primary.light,
+    padding: "0 1px",
   },
-});
+}));
 
 interface STProps extends TabsProps {
   topMargin?: string;
