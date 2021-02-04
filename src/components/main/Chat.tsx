@@ -6,7 +6,7 @@ const Chat = () => {
     <PaperContainer
       width="50%"
       height="100%"
-      elevation={0}
+      elevation={2}
       backgroundColor="main"
     >
       <IconInput />
