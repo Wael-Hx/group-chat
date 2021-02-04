@@ -1,32 +1,35 @@
 import { makeStyles, Paper, PaperProps } from "@material-ui/core";
 
-interface SidebarProps extends PaperProps {
-  backgroundColor?: string;
+interface PaperContainerProps {
+  backgroundColor?: "main" | "dark";
   width?: string;
   height?: string;
 }
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
-    backgroundColor: ({ backgroundColor }: any) => backgroundColor ?? "inherit",
+    backgroundColor: (styleProps: PaperContainerProps) =>
+      theme.palette.secondary[styleProps.backgroundColor || "main"],
     width: ({ width }: any) => width ?? "auto",
     height: ({ height }: any) => height ?? "auto",
     display: "flex",
+    margin: "0 3px",
   },
 }));
 
-const Sidebar = ({
+const PaperContainer = ({
   children,
   backgroundColor,
   width,
   height,
   ...props
-}: SidebarProps) => {
-  const classes = useStyles({ backgroundColor, width, height });
+}: PaperProps & PaperContainerProps) => {
+  const styleProps = { backgroundColor, width, height };
+  const classes = useStyles(styleProps);
   return (
     <Paper {...props} className={classes.sidebar}>
       {children}
     </Paper>
   );
 };
-export default Sidebar;
+export default PaperContainer;
