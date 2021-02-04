@@ -4,6 +4,8 @@ import { ApolloClient, ApolloProvider, createHttpLink } from "@apollo/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { cache } from "./cache";
+import { ThemeProvider } from "@material-ui/core";
+import { theme } from "./theme/theme";
 
 const URI: string = process.env.REACT_APP_GQL_URI as string;
 
@@ -16,7 +18,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </ApolloProvider>,
 
   document.getElementById("root")
