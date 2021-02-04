@@ -45,10 +45,16 @@ const CommunitySideBar = () => {
       </StyledTabs>
 
       <TabPanel value={tab} index={0}>
-        <BackgroundImg cover="https://121clicks.com/wp-content/uploads/2019/07/landscape_photography_course_ian_plant_01.jpg" />
+        <BackgroundImg
+          height="20%"
+          cover="https://121clicks.com/wp-content/uploads/2019/07/landscape_photography_course_ian_plant_01.jpg"
+        />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <BackgroundImg cover="https://www.northlandscapes.com/files/images/portfolio-2020/northlandscapes-antarctica-a-faint-resemblance-cover.jpg" />
+        <BackgroundImg
+          height="20%"
+          cover="https://www.northlandscapes.com/files/images/portfolio-2020/northlandscapes-antarctica-a-faint-resemblance-cover.jpg"
+        />
       </TabPanel>
     </>
   );

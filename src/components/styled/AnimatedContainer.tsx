@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     background: ({ background }: any) => background ?? "inherit",
     fontSize: ".8em",
     padding: "5px 5px",
+    display: "flex",
   },
 }));
 

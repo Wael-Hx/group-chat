@@ -6,7 +6,7 @@ const useStyles = makeStyles({
     marginTop: "7%",
   },
   indicator: {
-    backgroundColor: "#1890ff",
+    backgroundColor: "#643F89",
   },
 });
 

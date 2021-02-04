@@ -3,17 +3,22 @@ import { Avatar, AvatarProps, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   avatar: {
-    width: ({ size }: any) => 8 * size,
-    height: ({ size }: any) => 8 * size,
+    width: (styleProps: StyledAvatarProps) => 8 * styleProps.size,
+    height: (styleProps: StyledAvatarProps) => 8 * styleProps.size,
   },
 });
 
-interface StyledAvatarProps extends AvatarProps {
+interface StyledAvatarProps {
   size: number;
 }
 
-const StyledAvatar: FC<StyledAvatarProps> = ({ children, size, ...props }) => {
-  const classes = useStyles({ size });
+const StyledAvatar: FC<AvatarProps & StyledAvatarProps> = ({
+  children,
+  size,
+  ...props
+}) => {
+  const styleProps = { size };
+  const classes = useStyles(styleProps);
   return (
     <Avatar {...props} className={classes.avatar}>
       {children}

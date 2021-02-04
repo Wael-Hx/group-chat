@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 1,
     },
     "&$selected": {
-      backgroundColor: "rgb(40, 44, 82)",
+      backgroundColor: "#4b2c6a",
     },
     "&:focus": {
-      backgroundColor: "rgb(40, 44, 82)",
+      backgroundColor: "#4b2c6a",
     },
   },
   selected: {},

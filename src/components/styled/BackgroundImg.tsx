@@ -4,17 +4,18 @@ const useStyles = makeStyles((theme) => ({
   background: {
     width: "100%",
     background: ({ cover }: any) => `url(${cover}) center / cover no-repeat`,
-    height: "20%",
+    height: ({ height }: any) => height ?? "auto",
     marginTop: 10,
   },
 }));
 
 interface BackgroundProps {
   cover?: string;
+  height?: string;
 }
 
-const BackgroundImg = ({ cover }: BackgroundProps) => {
-  const classes = useStyles({ cover });
+const BackgroundImg = ({ cover, height }: BackgroundProps) => {
+  const classes = useStyles({ cover, height });
   return <div className={classes.background}></div>;
 };
 
