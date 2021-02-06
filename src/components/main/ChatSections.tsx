@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "7px 0",
     fontSize: "1rem",
+    color: "white",
   },
   label: {
     height: "inherit",
@@ -15,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   group: {
     marginTop: theme.spacing(5),
     width: "100%",
+  },
+  selected: {
+    color: "white !important",
   },
 }));
 
@@ -42,9 +46,9 @@ const ChatSections = () => {
           classes={{
             root: classes.toggleRoot,
             label: classes.label,
+            selected: classes.selected,
           }}
-          value="left"
-          aria-label="left aligned"
+          value="main"
         >
           <h6> main </h6>
         </ToggleButton>
@@ -52,9 +56,9 @@ const ChatSections = () => {
           classes={{
             root: classes.toggleRoot,
             label: classes.label,
+            selected: classes.selected,
           }}
-          value="center"
-          aria-label="centered"
+          value="new stuff"
         >
           <h6> new stuff </h6>
         </ToggleButton>
@@ -62,9 +66,10 @@ const ChatSections = () => {
           classes={{
             root: classes.toggleRoot,
             label: classes.label,
+            selected: classes.selected,
           }}
-          value="right"
-          aria-label="right aligned"
+          value="other"
+          aria-label="other"
         >
           <h6> other </h6>
         </ToggleButton>

@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "fit-content",
     marginTop: "auto",
+    borderTop: "1px dashed silver",
   },
   input: {
     flex: 1,
@@ -16,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
   iconButton: {
     padding: 5,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.bg.main,
     borderRadius: 5,
     "&:hover": {
-      backgroundColor: "transparent",
+      backgroundColor: theme.palette.bg.main,
     },
   },
   divider: {

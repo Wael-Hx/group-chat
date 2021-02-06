@@ -3,10 +3,11 @@ import { FC } from "react";
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
-    marginTop: "7%",
+    paddingTop: "7%",
+    backgroundColor: theme.palette.bg.dark,
   },
   indicator: {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.bg.light,
     padding: "0 1px",
   },
 }));

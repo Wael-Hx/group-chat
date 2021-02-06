@@ -9,11 +9,10 @@ interface PaperContainerProps {
 const useStyles = makeStyles((theme) => ({
   sidebar: {
     backgroundColor: (styleProps: PaperContainerProps) =>
-      theme.palette.primary[styleProps.backgroundColor || "main"],
+      theme.palette.bg[styleProps.backgroundColor || "main"],
     width: ({ width }: any) => width ?? "auto",
     height: ({ height }: any) => height ?? "auto",
     display: "flex",
-    margin: "0 3px",
   },
 }));
 

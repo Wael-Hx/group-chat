@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 
 const useStyles = makeStyles((theme) => ({
   tab: {
-    marginTop: "7%",
+    paddingTop: "7%",
     width: "75%",
     height: "100%",
   },

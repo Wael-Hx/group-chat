@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 1,
     },
     "&$selected": {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.palette.bg.dark,
     },
   },
   selected: {},
