@@ -1,24 +1,52 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, ApolloProvider, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  split,
+} from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { cache } from "./cache";
-import { ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { theme } from "./theme/theme";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 const URI: string = process.env.REACT_APP_GQL_URI as string;
+const WS: string = process.env.REACT_APP_GQL_WS as string;
 
 const endpoint = createHttpLink({ uri: URI, credentials: "include" });
 
+const wsLink = new WebSocketLink({
+  uri: WS,
+  options: {
+    reconnect: true,
+  },
+});
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  endpoint
+);
+
 const client = new ApolloClient({
-  link: endpoint,
+  link: splitLink,
   cache: cache,
 });
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
     </ThemeProvider>
   </ApolloProvider>,
