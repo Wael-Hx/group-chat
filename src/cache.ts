@@ -1,4 +1,5 @@
 import { InMemoryCache, makeVar } from "@apollo/client";
+import { ChatTree } from "./types/messages.type";
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -18,6 +19,11 @@ export const loggedUserVar = makeVar<UserVar>({
   isAuthenticated: false,
   user: null,
   loading: true,
+});
+
+export const chatMessagesTree = makeVar<ChatTree>({
+  activeSub: null,
+  chats: {},
 });
 
 interface User {
