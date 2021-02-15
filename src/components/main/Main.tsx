@@ -1,6 +1,8 @@
-import { useSubscription } from "@apollo/client";
+import { useReactiveVar, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@material-ui/core";
+import { chatMessagesTree } from "../../cache";
 import { MYSUBS } from "../../gql/subscriptions/chat";
+import { ChatSubscriptionData } from "../../types/messages.type";
 import AnimatedContainer from "../styled/AnimatedContainer";
 import PaperContainer from "../styled/PaperContainer";
 import Swipeable from "../styled/Swipeable";
@@ -8,15 +10,40 @@ import Chat from "./Chat";
 import CommunitySideBar from "./CommunitySideBar";
 
 const Main = () => {
-  const { data, error } = useSubscription(MYSUBS, {
+  const chatState = useReactiveVar(chatMessagesTree);
+  useSubscription<ChatSubscriptionData>(MYSUBS, {
     variables: {
       mySubs: ["g1", "g2"],
     },
+    onSubscriptionData({ subscriptionData }) {
+      const { data } = subscriptionData;
+      if (data?.messages) {
+        if (!chatState.chats[data.messages.sub]) {
+          chatMessagesTree({
+            ...chatMessagesTree(),
+            chats: {
+              ...chatMessagesTree().chats,
+              [data.messages.sub]: [data.messages],
+            },
+          });
+        } else {
+          chatMessagesTree({
+            ...chatMessagesTree(),
+            chats: {
+              ...chatMessagesTree().chats,
+              [data.messages.sub]: [
+                ...chatState.chats[data.messages.sub],
+                data.messages,
+              ],
+            },
+          });
+        }
+      }
+    },
   });
-  console.log(error);
-  console.log(data);
+
   const mobileScreen = useMediaQuery("(max-width:1000px)");
-  console.log(mobileScreen);
+
   return (
     <AnimatedContainer
       component="main"
