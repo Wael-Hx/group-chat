@@ -8,17 +8,9 @@ const useStyles = makeStyles((theme) => ({
     height: ({ height }: any) => (height ? height : "auto"),
     background: ({ background }: any) => background ?? "inherit",
     fontSize: ".8em",
-
     display: "flex",
   },
 }));
-
-interface AnimatedContainerProps extends PaperProps {
-  width?: string | number;
-  height?: string | number;
-  topMargin?: string;
-  background?: string;
-}
 
 const AnimatedContainer: FC<AnimatedContainerProps> = ({
   children,
@@ -39,3 +31,10 @@ const AnimatedContainer: FC<AnimatedContainerProps> = ({
 };
 
 export default AnimatedContainer;
+
+interface AnimatedContainerProps extends PaperProps {
+  width?: string | number;
+  height?: string | number;
+  topMargin?: string;
+  background?: string;
+}
