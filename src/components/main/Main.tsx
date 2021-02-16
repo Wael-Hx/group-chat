@@ -1,7 +1,9 @@
-import { useReactiveVar, useSubscription } from "@apollo/client";
+import { useQuery, useReactiveVar, useSubscription } from "@apollo/client";
 import { useMediaQuery } from "@material-ui/core";
-import { chatMessagesTree } from "../../cache";
+import { chatMessagesTree, communityTabsData } from "../../cache";
+import { GET_MY_COMMUNITIES } from "../../gql/queries/communities";
 import { MYSUBS } from "../../gql/subscriptions/chat";
+import { CommunityTabsData } from "../../types/communities.type";
 import { ChatSubscriptionData } from "../../types/messages.type";
 import AnimatedContainer from "../styled/AnimatedContainer";
 import PaperContainer from "../styled/PaperContainer";
@@ -11,10 +13,25 @@ import CommunitySideBar from "./CommunitySideBar";
 
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
+  const { communityTabs } = useReactiveVar(communityTabsData);
+
+  useQuery<{ getMyCommunities: CommunityTabsData[] }>(GET_MY_COMMUNITIES, {
+    onCompleted({ getMyCommunities }) {
+      communityTabsData({
+        ...communityTabsData(),
+        communityTabs: [
+          ...communityTabsData().communityTabs,
+          ...getMyCommunities,
+        ],
+      });
+    },
+  });
+
   useSubscription<ChatSubscriptionData>(MYSUBS, {
     variables: {
-      mySubs: ["g1", "g2"],
+      mySubs: communityTabs.map((comm) => comm.name),
     },
+
     onSubscriptionData({ subscriptionData }) {
       const { data } = subscriptionData;
       if (data?.messages) {
@@ -22,7 +39,7 @@ const Main = () => {
           chatMessagesTree({
             ...chatMessagesTree(),
             chats: {
-              ...chatMessagesTree().chats,
+              ...chatState.chats,
               [data.messages.sub]: [data.messages],
             },
           });
@@ -55,12 +72,12 @@ const Main = () => {
       {mobileScreen ? (
         <Swipeable anchor="left">
           <PaperContainer width="100%" height="100%" elevation={2} square>
-            <CommunitySideBar />
+            <CommunitySideBar communityTabs={communityTabs} />
           </PaperContainer>
         </Swipeable>
       ) : (
         <PaperContainer width="25%" height="100%" elevation={2} square>
-          <CommunitySideBar />
+          <CommunitySideBar communityTabs={communityTabs} />
         </PaperContainer>
       )}
       <PaperContainer
@@ -68,9 +85,10 @@ const Main = () => {
         height="100%"
         elevation={2}
         backgroundColor="dark"
+        flexDirection="column"
         square
       >
-        <Chat />
+        <Chat currentChat={chatState.activeSub} />
       </PaperContainer>
 
       {mobileScreen ? (
