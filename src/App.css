@@ -50,3 +50,11 @@ nav {
   height: 90vh;
   overflow: hidden;
 }
+
+.scroll {
+  overflow-y: scroll;
+  height: inherit;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
