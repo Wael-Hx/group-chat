@@ -5,11 +5,19 @@ import StyledTab from "../styled/StyledTab";
 import StyledTabs from "../styled/StyledTabs";
 import TabPanel from "../styled/TabPanel";
 import ChatSections from "./ChatSections";
+import PeopleIcon from "@material-ui/icons/People";
+import { CommunitiesData } from "../../types/communities.type";
+import { chatMessagesTree } from "../../cache";
 
-const CommunitySideBar = () => {
+const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
   const [tab, setTab] = useState(0);
 
   const changeTab = (_: any, newTab: number) => {
+    chatMessagesTree({
+      ...chatMessagesTree(),
+      activeSub: communityTabs[newTab].name,
+    });
+
     setTab(newTab);
   };
 
@@ -23,42 +31,37 @@ const CommunitySideBar = () => {
         allowScrollButtonsMobile
         scrollButtons="auto"
       >
-        <StyledTab
-          icon={
-            <StyledAvatar
-              variant="rounded"
-              src="http://stencilfont.org/stencilfonts/grunge/grunge-stencil-a.jpg"
-              alt="community name"
-              size={8}
-            />
-          }
-        />
-        <StyledTab
-          icon={
-            <StyledAvatar
-              variant="rounded"
-              src="http://stencilfont.org/stencilfonts/graffiti/graffiti-stencil-b.jpg"
-              alt="community name"
-              size={8}
-            />
-          }
-        />
+        {communityTabs.map((comm, idx) => (
+          <StyledTab
+            key={idx}
+            icon={
+              <StyledAvatar
+                variant="rounded"
+                src={comm.cover}
+                alt={comm.name}
+                size={8}
+              >
+                {comm.cover ? null : <PeopleIcon fontSize="medium" />}
+              </StyledAvatar>
+            }
+          />
+        ))}
       </StyledTabs>
 
-      <TabPanel value={tab} index={0}>
-        <BackgroundImg
-          height="20%"
-          cover="https://121clicks.com/wp-content/uploads/2019/07/landscape_photography_course_ian_plant_01.jpg"
-        />
-        <ChatSections />
-      </TabPanel>
-      <TabPanel value={tab} index={1}>
-        <BackgroundImg
-          height="20%"
-          cover="https://www.northlandscapes.com/files/images/portfolio-2020/northlandscapes-antarctica-a-faint-resemblance-cover.jpg"
-        />
-        <ChatSections />
-      </TabPanel>
+      {communityTabs.map((comm, idx) => (
+        <TabPanel key={comm.name} value={tab} index={idx}>
+          <BackgroundImg
+            height="20%"
+            cover={
+              comm.cover_image ||
+              `https://via.placeholder.com/700x400/202636/fff?text=${encodeURI(
+                comm.name
+              )}`
+            }
+          />
+          <ChatSections />
+        </TabPanel>
+      ))}
     </>
   );
 };
