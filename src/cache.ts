@@ -1,4 +1,5 @@
 import { InMemoryCache, makeVar } from "@apollo/client";
+import { CommunitiesData } from "./types/communities.type";
 import { ChatTree } from "./types/messages.type";
 
 export const cache: InMemoryCache = new InMemoryCache({
@@ -8,6 +9,11 @@ export const cache: InMemoryCache = new InMemoryCache({
         loggedUser: {
           read() {
             return loggedUserVar();
+          },
+        },
+        communityTabsData: {
+          read() {
+            return communityTabsData();
           },
         },
       },
@@ -24,6 +30,18 @@ export const loggedUserVar = makeVar<UserVar>({
 export const chatMessagesTree = makeVar<ChatTree>({
   activeSub: null,
   chats: {},
+});
+
+export const communityTabsData = makeVar<CommunitiesData>({
+  communityTabs: [
+    {
+      id: 0,
+      name: "General",
+      description: "general chat for all users",
+      cover_image:
+        "https://via.placeholder.com/700x400/202636/fff?text=General%20Section",
+    },
+  ],
 });
 
 interface User {
