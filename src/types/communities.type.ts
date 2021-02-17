@@ -4,7 +4,7 @@ export interface CommunityTabsData {
   cover?: string;
   cover_image?: string;
   description: string;
-  comm_admin?: string;
+  comm_admin: string | null;
 }
 
 export interface CommunitiesData {
