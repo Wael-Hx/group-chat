@@ -1,15 +1,20 @@
 import { useReactiveVar } from "@apollo/client";
-import { chatMessagesTree } from "../../cache";
+import { chatMessagesTree, loggedUserVar } from "../../cache";
 import IconInput from "../styled/IconInput";
 import Msg from "./Msg";
 
-const Chat = ({ currentChat }: ChatProps) => {
+const Chat = ({ currentChat, modId }: ChatProps) => {
   const chatState = useReactiveVar(chatMessagesTree);
+  const { user } = useReactiveVar(loggedUserVar);
 
   if (!currentChat) {
     return (
       <div className="dev center">
-        <h1> click on the general section or create a new group</h1>
+        <h1>
+          {" "}
+          hello {user?.username} <br /> click on the general section or create a
+          new group
+        </h1>
       </div>
     );
   }
@@ -17,8 +22,8 @@ const Chat = ({ currentChat }: ChatProps) => {
   return (
     <>
       <section className="scroll">
-        {chatState.chats[currentChat]?.map((msg) => (
-          <Msg key={msg.username} message={msg} />
+        {chatState.chats[currentChat]?.map((msg, idx) => (
+          <Msg key={idx} message={msg} userId={user?.id!} modId={modId} />
         ))}
       </section>
       <IconInput />
@@ -30,4 +35,5 @@ export default Chat;
 
 interface ChatProps {
   currentChat: string | null;
+  modId: string | null;
 }

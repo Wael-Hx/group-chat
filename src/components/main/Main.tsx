@@ -88,7 +88,10 @@ const Main = () => {
         flexDirection="column"
         square
       >
-        <Chat currentChat={chatState.activeSub} />
+        <Chat
+          currentChat={chatState.activeSub.name}
+          modId={chatState.activeSub.modId}
+        />
       </PaperContainer>
 
       {mobileScreen ? (
