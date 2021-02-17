@@ -9,8 +9,7 @@ export const theme = createMuiTheme({
       contrastText: "#fff",
     },
     secondary: {
-      main: "#fff",
-      dark: "#fff",
+      main: "#33ffee",
     },
     text: {
       primary: "#fff",
@@ -21,14 +20,31 @@ export const theme = createMuiTheme({
       dark: "#202636",
       contrastText: "#fff",
     },
+    userColor: {
+      main: "#448aff",
+    },
+    membersColor: {
+      main: "#8e24aa",
+    },
+    modColor: {
+      main: "#00b8d4",
+    },
+    contrastThreshold: 3,
+    tonalOffset: 0.2,
   },
 });
 
 declare module "@material-ui/core/styles/createPalette" {
   interface Palette {
     bg: Palette["primary"];
+    userColor: Palette["primary"];
+    membersColor: Palette["primary"];
+    modColor: Palette["primary"];
   }
   interface PaletteOptions {
     bg: PaletteOptions["primary"];
+    userColor: PaletteOptions["primary"];
+    membersColor: PaletteOptions["primary"];
+    modColor: PaletteOptions["primary"];
   }
 }
