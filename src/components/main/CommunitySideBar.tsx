@@ -10,12 +10,15 @@ import { CommunitiesData } from "../../types/communities.type";
 import { chatMessagesTree } from "../../cache";
 
 const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState<number | null>(null);
 
   const changeTab = (_: any, newTab: number) => {
     chatMessagesTree({
       ...chatMessagesTree(),
-      activeSub: communityTabs[newTab].name,
+      activeSub: {
+        modId: communityTabs[newTab].comm_admin,
+        name: communityTabs[newTab].name,
+      },
     });
 
     setTab(newTab);
