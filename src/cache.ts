@@ -28,6 +28,7 @@ export const loggedUserVar = makeVar<UserVar>({
 });
 
 export const chatMessagesTree = makeVar<ChatTree>({
+  tabIndex: 0,
   activeSub: {
     name: null,
     modId: null,

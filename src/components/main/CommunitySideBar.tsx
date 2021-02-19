@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundImg from "../styled/BackgroundImg";
 import StyledAvatar from "../styled/StyledAvatar";
 import StyledTab from "../styled/StyledTab";
@@ -6,11 +6,22 @@ import StyledTabs from "../styled/StyledTabs";
 import TabPanel from "../styled/TabPanel";
 import ChatSections from "./ChatSections";
 import PeopleIcon from "@material-ui/icons/People";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import { CommunitiesData } from "../../types/communities.type";
 import { chatMessagesTree } from "../../cache";
 
 const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
-  const [tab, setTab] = useState<number | null>(null);
+  const [tab, setTab] = useState(chatMessagesTree().tabIndex);
+
+  useEffect(() => {
+    chatMessagesTree({
+      ...chatMessagesTree(),
+      activeSub: {
+        modId: communityTabs[tab].comm_admin,
+        name: communityTabs[tab].name,
+      },
+    });
+  }, [communityTabs, tab]);
 
   const changeTab = (_: any, newTab: number) => {
     chatMessagesTree({
@@ -20,7 +31,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
         name: communityTabs[newTab].name,
       },
     });
-
+    chatMessagesTree().tabIndex = newTab;
     setTab(newTab);
   };
 
