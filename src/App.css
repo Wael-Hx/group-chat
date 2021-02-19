@@ -55,7 +55,14 @@ nav {
 .scroll {
   overflow-y: scroll;
   height: inherit;
+  scrollbar-width: none;
 }
 .scroll::-webkit-scrollbar {
   display: none;
+}
+
+.add_group {
+  position: fixed;
+  bottom: 2%;
+  left: 3px;
 }
