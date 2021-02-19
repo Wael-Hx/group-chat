@@ -9,9 +9,21 @@ import PeopleIcon from "@material-ui/icons/People";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import { CommunitiesData } from "../../types/communities.type";
 import { chatMessagesTree } from "../../cache";
+import { Button, Divider } from "@material-ui/core";
+import DialogBox from "../styled/DialogBox";
+import CreateGroup from "./CreateGroup";
 
 const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
   const [tab, setTab] = useState(chatMessagesTree().tabIndex);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const openDialog = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     chatMessagesTree({
@@ -61,7 +73,24 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
           />
         ))}
       </StyledTabs>
+      <div className="add_group">
+        <Button onClick={openDialog}>
+          <StyledAvatar variant="rounded" size={8}>
+            <GroupAddIcon fontSize="medium" />
+          </StyledAvatar>
+        </Button>
 
+        <DialogBox
+          fullWidth
+          maxWidth="sm"
+          closeDialog={handleClose}
+          open={open}
+          title="Create a new Group"
+        >
+          <CreateGroup />
+        </DialogBox>
+      </div>
+      <Divider orientation="vertical" />
       {communityTabs.map((comm, idx) => (
         <TabPanel key={comm.name} value={tab} index={idx}>
           <BackgroundImg
