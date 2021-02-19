@@ -58,6 +58,7 @@ const IconInput = () => {
         to: chatState.activeSub.name,
       },
     });
+    setMsgBody("");
   };
   return (
     <form onSubmit={submitMessage} className={classes.root}>
