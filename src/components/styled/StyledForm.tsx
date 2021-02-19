@@ -2,10 +2,12 @@ import { makeStyles, Paper, PaperProps, Slide } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: ({ topMargin }: any) => `${topMargin || "auto"} auto auto auto`,
-    width: ({ width }: any) => (width ? width : "auto"),
+    margin: ({ topMargin }: StyledFormProps) =>
+      `${topMargin || "auto"} auto auto auto`,
+    width: ({ width }: StyledFormProps) => width || "auto",
     fontSize: ".8em",
-    padding: "20px 30px",
+    padding: ({ padding }: StyledFormProps) => padding || "20px 30px",
+
     [theme.breakpoints.down("sm")]: {
       margin: "20% auto auto auto",
     },
@@ -13,16 +15,16 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
     flexDirection: "column",
-
     "& >*": {
       marginBottom: 10,
+      fontFamily: "Montserrat , Roboto, system-ui",
     },
     "& > div:last-child": {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
+
       "& h3": {
-        fontFamily: "Roboto , system-ui",
         color: "#68adef",
         padding: "0 15px",
         fontWeight: "500",
@@ -32,22 +34,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface StyledFormProps extends PaperProps {
-  slideDirection?: "up" | "left" | "down" | "right";
-  width?: string | number;
-  disableAnimation?: boolean;
-  topMargin?: string;
-}
-
 const StyledForm = ({
   children,
   slideDirection,
   width,
   disableAnimation,
   topMargin,
+  padding,
   ...props
-}: StyledFormProps) => {
-  const classes = useStyles({ width, topMargin });
+}: StyledFormProps & PaperProps) => {
+  const styleProps = { width, topMargin, padding };
+  const classes = useStyles(styleProps);
   if (disableAnimation) {
     return (
       <Paper
@@ -73,3 +70,11 @@ const StyledForm = ({
 };
 
 export default StyledForm;
+
+interface StyledFormProps {
+  slideDirection?: "up" | "left" | "down" | "right";
+  width?: string | number;
+  disableAnimation?: boolean;
+  topMargin?: string;
+  padding?: string;
+}
