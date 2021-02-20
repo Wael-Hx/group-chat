@@ -1,5 +1,5 @@
 import { useQuery, useReactiveVar, useSubscription } from "@apollo/client";
-import { useMediaQuery } from "@material-ui/core";
+import { Divider, useMediaQuery } from "@material-ui/core";
 import { chatMessagesTree, communityTabsData } from "../../cache";
 import { GET_MY_COMMUNITIES } from "../../gql/queries/communities";
 import { MYSUBS } from "../../gql/subscriptions/chat";
@@ -10,6 +10,7 @@ import PaperContainer from "../styled/PaperContainer";
 import Swipeable from "../styled/Swipeable";
 import Chat from "./Chat";
 import CommunitySideBar from "./CommunitySideBar";
+import Contacts from "./Contacts";
 
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
@@ -66,25 +67,38 @@ const Main = () => {
       component="main"
       height="100%"
       width="100%"
-      elevation={0}
+      elevation={2}
       square
     >
       {mobileScreen ? (
         <Swipeable anchor="left">
-          <PaperContainer width="100%" height="100%" elevation={2} square>
+          <PaperContainer
+            width="100%"
+            height="100%"
+            elevation={0}
+            backgroundColor="dark"
+            square
+          >
             <CommunitySideBar communityTabs={communityTabs} />
           </PaperContainer>
         </Swipeable>
       ) : (
-        <PaperContainer width="25%" height="100%" elevation={2} square>
+        <PaperContainer
+          width="25%"
+          height="100%"
+          elevation={0}
+          backgroundColor="dark"
+          square
+        >
           <CommunitySideBar communityTabs={communityTabs} />
         </PaperContainer>
       )}
+      <Divider orientation="vertical" />
       <PaperContainer
         width={mobileScreen ? "100%" : "50%"}
         height="100%"
-        elevation={2}
-        backgroundColor="dark"
+        elevation={0}
+        backgroundColor="light"
         flexDirection="column"
         square
       >
@@ -93,16 +107,32 @@ const Main = () => {
           modId={chatState.activeSub.modId}
         />
       </PaperContainer>
-
+      <Divider orientation="vertical" />
       {mobileScreen ? (
         <Swipeable anchor="right">
-          <PaperContainer width="100%" height="100%" elevation={2} square>
-            <h2> contact list </h2>
+          <PaperContainer
+            width="100%"
+            height="100%"
+            backgroundColor="dark"
+            elevation={0}
+            square
+            flexDirection="column"
+            center
+          >
+            <Contacts />
           </PaperContainer>
         </Swipeable>
       ) : (
-        <PaperContainer width="25%" height="100%" elevation={2} square>
-          <h2> contact list </h2>
+        <PaperContainer
+          width="25%"
+          height="100%"
+          backgroundColor="dark"
+          elevation={0}
+          square
+          flexDirection="column"
+          center
+        >
+          <Contacts />
         </PaperContainer>
       )}
     </AnimatedContainer>
