@@ -3,7 +3,7 @@ import { KeyboardEvent, MouseEvent, ReactNode, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: "80vw",
+    width: "87vw",
   },
 }));
 

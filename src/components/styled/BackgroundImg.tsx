@@ -3,8 +3,9 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   background: {
     width: "100%",
-    background: ({ cover }: any) => `url(${cover}) center / cover no-repeat`,
-    height: ({ height }: any) => height ?? "auto",
+    background: ({ cover }: BackgroundProps) =>
+      `url(${cover}) center / cover no-repeat`,
+    height: ({ height }: BackgroundProps) => height ?? "auto",
     marginTop: 10,
     marginLeft: 3,
   },
