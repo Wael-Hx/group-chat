@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: (styleProps: PaperContainerProps) =>
       styleProps.flexDirection ?? "row",
+    alignItems: ({ center }: PaperContainerProps) =>
+      center ? "center" : "normal",
+    margin: ({ topMargin }: PaperContainerProps) =>
+      `${topMargin || "initial"} auto auto auto`,
   },
 }));
 
@@ -18,9 +22,18 @@ const PaperContainer = ({
   width,
   height,
   flexDirection,
+  center,
+  topMargin,
   ...props
 }: PaperProps & PaperContainerProps) => {
-  const styleProps = { backgroundColor, width, height, flexDirection };
+  const styleProps = {
+    backgroundColor,
+    width,
+    height,
+    flexDirection,
+    center,
+    topMargin,
+  };
   const classes = useStyles(styleProps);
   return (
     <Paper {...props} className={classes.sidebar}>
@@ -34,6 +47,8 @@ interface PaperContainerProps {
   backgroundColor?: "main" | "dark" | "light" | "contrastText";
   width?: string;
   height?: string;
+  center?: boolean;
+  topMargin?: string;
   flexDirection?:
     | "-moz-initial"
     | "inherit"
