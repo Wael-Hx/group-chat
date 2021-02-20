@@ -102,7 +102,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
               )}`
             }
           />
-          <ChatSections />
+          <ChatSections description={comm.description} />
         </TabPanel>
       ))}
     </>
