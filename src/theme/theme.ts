@@ -4,33 +4,53 @@ export const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#1976d2",
-      dark: "#115293",
-      light: "#4791db",
-      contrastText: "#fff",
     },
     secondary: {
-      main: "#33ffee",
-    },
-    text: {
-      primary: "#fff",
+      main: "#26c6da",
     },
     bg: {
-      main: "#2A3458",
-      light: "#2C70F5",
-      dark: "#202636",
-      contrastText: "#fff",
+      main: "#fefefe",
+      light: "#fafafa",
+      dark: "#f5f5f5",
+    },
+    text: {
+      primary: "#121212",
     },
     userColor: {
-      main: "#448aff",
+      main: "#3f51b5",
     },
     membersColor: {
-      main: "#8e24aa",
+      main: "#673ab7",
     },
     modColor: {
-      main: "#00b8d4",
+      main: "#004d40",
     },
     contrastThreshold: 3,
-    tonalOffset: 0.2,
+    tonalOffset: 0.3,
+  },
+  typography: {
+    h3: {
+      fontFamily: "Montserrat , Roboto,helvetica",
+      fontSize: "1.5rem",
+    },
+    h4: {
+      fontFamily: "Raleway , Roboto,helvetica",
+      fontSize: "1.4rem",
+    },
+    h5: {
+      fontFamily: "Raleway , Roboto , helvetica",
+      fontSize: "1.2rem",
+    },
+    h6: {
+      fontFamily: "Raleway , Roboto,helvetica",
+      fontSize: "0.87rem",
+      fontWeight: 600,
+    },
+    body1: {
+      fontFamily: " Roboto",
+      fontSize: "0.8rem",
+    },
+    htmlFontSize: 16,
   },
 });
 
