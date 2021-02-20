@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { TextField } from "@material-ui/core";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { CREATE_GROUP } from "../../gql/mutations/chat";
 import StyledButton from "../styled/StyledButton";
 import StyledForm from "../styled/StyledForm";
@@ -14,7 +14,7 @@ const CreateGroup = () => {
     cover_image: "",
     description: "",
   });
-
+  const [err, setErr] = useState("");
   const userCommunities = communityTabsData();
 
   const [createGroup, { loading }] = useMutation<{
@@ -28,10 +28,16 @@ const CreateGroup = () => {
       });
       console.log(userCommunities);
     },
-    onError(err) {
-      alert(err);
+    onError(error) {
+      setErr(error.message);
     },
   });
+  //reset error when submitting
+  useEffect(() => {
+    if (loading) {
+      setErr("");
+    }
+  }, [loading]);
 
   const { name, cover, cover_image, description } = group;
 
@@ -66,6 +72,8 @@ const CreateGroup = () => {
         type="text"
         required
         autoComplete="off"
+        error={err.includes("name")}
+        helperText={err.includes("name") ? err : null}
       />
       <TextField
         label="cover"
@@ -88,6 +96,9 @@ const CreateGroup = () => {
         name="description"
         type="text"
         autoComplete="off"
+        required
+        error={err.includes("description")}
+        helperText={err.includes("description") ? err : null}
       />
       <div>
         <StyledButton type="submit" disabled={loading} spinner={loading}>
