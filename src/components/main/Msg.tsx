@@ -1,4 +1,4 @@
-import { makeStyles, useTheme } from "@material-ui/core";
+import { makeStyles, Typography, useTheme } from "@material-ui/core";
 import { Message } from "../../types/messages.type";
 import { getPaletteColor } from "../../utils/getPaletteColor";
 import { getRelativeTime } from "../../utils/getRelativeTime";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   body: {
     display: "flex",
     alignItems: "baseline",
-    width: "87%",
+    width: "80%",
     "& h3 , p": {
       margin: 4,
     },
@@ -39,15 +39,16 @@ const Msg = ({ message, modId, userId }: MsgProps) => {
   return (
     <div className={classes.msgContainer}>
       <div className={classes.body}>
-        <h3
+        <Typography
+          variant="h6"
           style={{
             color:
               theme.palette[getPaletteColor(message.id, userId, modId)].main,
           }}
         >
           {`${message.username} :`}
-        </h3>
-        <p> {message.body}</p>
+        </Typography>
+        <Typography variant="body1"> {message.body}</Typography>
       </div>
       <i> {getRelativeTime(message.timestamp)} </i>
     </div>

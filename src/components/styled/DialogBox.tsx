@@ -7,6 +7,7 @@ import {
   DialogProps,
   DialogTitle,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +36,12 @@ const DialogBox = ({
         aria-labelledby="dialog-title"
         {...props}
       >
-        <DialogTitle className={classes.title} id="dialog-title">
-          {title}
+        <DialogTitle
+          disableTypography
+          className={classes.title}
+          id="dialog-title"
+        >
+          <Typography variant="h4"> {title}</Typography>
         </DialogTitle>
         <DialogContent>{children}</DialogContent>
         <DialogActions>
