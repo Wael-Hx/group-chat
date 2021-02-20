@@ -87,7 +87,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
           open={open}
           title="Create a new Group"
         >
-          <CreateGroup />
+          <CreateGroup closeDialog={handleClose} />
         </DialogBox>
       </div>
       <Divider orientation="vertical" />

@@ -7,7 +7,7 @@ import StyledForm from "../styled/StyledForm";
 import { CommunityTabsData } from "../../types/communities.type";
 import { communityTabsData } from "../../cache";
 
-const CreateGroup = () => {
+const CreateGroup = ({ closeDialog }: GroupComponentProps) => {
   const [group, setGroup] = useState({
     name: "",
     cover: "",
@@ -55,6 +55,7 @@ const CreateGroup = () => {
         description,
       },
     });
+    closeDialog();
   };
   return (
     <StyledForm
@@ -110,3 +111,7 @@ const CreateGroup = () => {
 };
 
 export default CreateGroup;
+
+interface GroupComponentProps {
+  closeDialog: () => void;
+}
