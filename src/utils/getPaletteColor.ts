@@ -3,12 +3,12 @@ export const getPaletteColor = (
   userId: string,
   modId: string | null
 ) => {
-  if (senderId === userId) {
+  if (senderId === modId && senderId === userId) {
+    return "secondary";
+  } else if (senderId === userId) {
     return "userColor";
   } else if (senderId === modId) {
     return "modColor";
-  } else if (userId === modId) {
-    return "secondary";
   } else {
     return "membersColor";
   }
