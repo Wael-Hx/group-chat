@@ -12,6 +12,7 @@ export interface ChatSubscriptionData {
 export interface ChatTree {
   tabIndex: number;
   activeSub: {
+    id: number | null;
     name: string | null;
     modId: string | null;
   };

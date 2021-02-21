@@ -25,11 +25,13 @@ export const loggedUserVar = makeVar<UserVar>({
   isAuthenticated: false,
   user: null,
   loading: true,
+  contactList: [],
 });
 
 export const chatMessagesTree = makeVar<ChatTree>({
   tabIndex: 0,
   activeSub: {
+    id: null,
     name: null,
     modId: null,
   },
@@ -49,7 +51,7 @@ export const communityTabsData = makeVar<CommunitiesData>({
   ],
 });
 
-interface User {
+export interface User {
   id: string;
   username: string;
   avatar: string;
@@ -57,10 +59,17 @@ interface User {
   createdAt: string;
 }
 
+export interface Contact {
+  id: string;
+  username: string;
+  avatar?: string;
+}
+
 export interface UserVar {
   isAuthenticated: boolean;
   user: User | null;
   loading?: boolean;
+  contactList: Contact[];
 }
 
 export interface UserData {
