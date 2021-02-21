@@ -9,10 +9,13 @@ export const getRelativeTime = (unixTime: number): string => {
 
   if (relativeTime < min) {
     rTime = Math.round(relativeTime / 1);
-    return `${rTime} second${rTime > 1 ? "s" : ""} ago`;
+    if (rTime === 0) {
+      return `now`;
+    }
+    return `${rTime} sec`;
   } else if (relativeTime < hour) {
     rTime = Math.round(relativeTime / min);
-    return `${rTime} min${rTime > 1 ? "s" : ""} ago`;
+    return `${rTime} min`;
   } else if (relativeTime < day) {
     rTime = Math.round(relativeTime / hour);
     return `${rTime} hour${rTime > 1 ? "s" : ""} ago `;
