@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
     background: ({ cover }: BackgroundProps) =>
       `url(${cover}) center / cover no-repeat`,
     height: ({ height }: BackgroundProps) => height ?? "auto",
-    marginTop: 10,
-    marginLeft: 3,
   },
 }));
 
