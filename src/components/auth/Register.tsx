@@ -20,6 +20,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     onCompleted({ login }) {
       if (login) {
         loggedUserVar({
+          ...loggedUserVar(),
           isAuthenticated: true,
           user: login,
           loading: false,
@@ -35,6 +36,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     onCompleted({ register }) {
       if (register) {
         loggedUserVar({
+          ...loggedUserVar(),
           isAuthenticated: true,
           user: register,
           loading: false,

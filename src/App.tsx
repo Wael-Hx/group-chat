@@ -17,12 +17,14 @@ const App = () => {
   useEffect(() => {
     if (data?.me && !loading) {
       loggedUserVar({
+        ...loggedUserVar(),
         isAuthenticated: true,
         user: data.me,
         loading: false,
       });
     } else if (!data?.me && !loading) {
       loggedUserVar({
+        ...loggedUserVar(),
         isAuthenticated: false,
         user: null,
         loading: false,
