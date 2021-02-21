@@ -10,7 +10,7 @@ import PaperContainer from "../styled/PaperContainer";
 import Swipeable from "../styled/Swipeable";
 import Chat from "./Chat";
 import CommunitySideBar from "./CommunitySideBar";
-import Contacts from "./Contacts";
+import Contacts from "../contacts/Contacts";
 
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
