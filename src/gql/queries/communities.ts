@@ -11,3 +11,13 @@ export const GET_MY_COMMUNITIES = gql`
     }
   }
 `;
+
+export const GET_MEMBERS = gql`
+  query Members($groupId: ID!) {
+    membersList(groupId: $groupId) {
+      id
+      username
+      avatar
+    }
+  }
+`;
