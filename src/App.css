@@ -18,8 +18,7 @@ code {
 }
 .aligned {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 }
 
 #root {
@@ -66,4 +65,20 @@ nav {
   position: fixed;
   bottom: 2%;
   left: 3px;
+}
+
+.sticky {
+  position: sticky;
+  background-color: inherit;
+  z-index: 2;
+  top: 0;
+}
+
+@keyframes loop {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
