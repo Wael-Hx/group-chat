@@ -9,7 +9,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import { CommunitiesData } from "../../types/communities.type";
 import { chatMessagesTree } from "../../cache";
-import { Button, Divider } from "@material-ui/core";
+import { Button, Divider, Tooltip } from "@material-ui/core";
 import DialogBox from "../styled/DialogBox";
 import CreateGroup from "./CreateGroup";
 
@@ -29,6 +29,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
     chatMessagesTree({
       ...chatMessagesTree(),
       activeSub: {
+        id: communityTabs[tab].id,
         modId: communityTabs[tab].comm_admin,
         name: communityTabs[tab].name,
       },
@@ -39,6 +40,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
     chatMessagesTree({
       ...chatMessagesTree(),
       activeSub: {
+        id: communityTabs[newTab].id,
         modId: communityTabs[newTab].comm_admin,
         name: communityTabs[newTab].name,
       },
@@ -76,7 +78,9 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
       <div className="add_group">
         <Button onClick={openDialog}>
           <StyledAvatar variant="rounded" size={8}>
-            <GroupAddIcon fontSize="medium" />
+            <Tooltip title="create a group">
+              <GroupAddIcon fontSize="medium" />
+            </Tooltip>
           </StyledAvatar>
         </Button>
 
