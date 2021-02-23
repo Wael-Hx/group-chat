@@ -9,3 +9,13 @@ export const MY_CONTACTS = gql`
     }
   }
 `;
+
+export const SEARCH_CONTACTS = gql`
+  query ContactList($search: String!) {
+    contactList(search: $search) {
+      id
+      avatar
+      username
+    }
+  }
+`;
