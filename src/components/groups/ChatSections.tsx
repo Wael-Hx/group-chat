@@ -5,11 +5,17 @@ import { GET_MEMBERS } from "../../gql/queries/communities";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
 import MembersList from "../communities/MembersList";
+import DialogBox from "../styled/DialogBox";
+import { useState } from "react";
+import AddMembers from "./AddMembers";
 
 const ChatSections = ({ description }: SectionProps) => {
   const [loadMembers, { loading, data }] = useLazyQuery<{
     membersList: Contact[];
   }>(GET_MEMBERS);
+
+  const [open, setOpen] = useState(false);
+
   const chatState = useReactiveVar(chatMessagesTree);
   const { user } = useReactiveVar(loggedUserVar);
 
@@ -20,6 +26,13 @@ const ChatSections = ({ description }: SectionProps) => {
     loadMembers({ variables: { groupId: chatState.activeSub.id } });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const openDialog = () => {
+    setOpen(true);
+  };
   return (
     <PaperContainer
       width="100%"
@@ -37,7 +50,21 @@ const ChatSections = ({ description }: SectionProps) => {
         {description ?? "no description provided"}
       </Typography>
       {chatState.activeSub.id && user?.id === chatState.activeSub.modId ? (
-        <Button variant="text">Add Members</Button>
+        <>
+          <Button onClick={openDialog} variant="text">
+            Add Members
+          </Button>
+
+          <DialogBox
+            fullWidth
+            maxWidth="sm"
+            closeDialog={handleClose}
+            open={open}
+            title={`Add members to ${chatState.activeSub.name}`}
+          >
+            <AddMembers />
+          </DialogBox>
+        </>
       ) : null}
 
       <Divider orientation="horizontal" variant="middle" flexItem />
