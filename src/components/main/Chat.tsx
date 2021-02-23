@@ -1,5 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
+import { Typography } from "@material-ui/core";
 import { chatMessagesTree, loggedUserVar } from "../../cache";
+import PaperContainer from "../styled/PaperContainer";
 import IconInput from "./IconInput";
 import Msg from "./Msg";
 
@@ -20,6 +22,16 @@ const Chat = ({ currentChat, modId }: ChatProps) => {
 
   return (
     <>
+      <PaperContainer
+        width="100%"
+        height="5%"
+        elevation={1}
+        addClass="center fixed"
+        center
+      >
+        <Typography variant="h6">Chat /</Typography>
+        <Typography variant="h6">{chatState.activeSub.name}</Typography>
+      </PaperContainer>
       <section className="scroll">
         {chatState.chats[currentChat]?.map((msg, idx) => (
           <Msg key={idx} message={msg} userId={user?.id!} modId={modId} />
