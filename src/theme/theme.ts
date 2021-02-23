@@ -34,7 +34,7 @@ export const theme = createMuiTheme({
       fontSize: "1.5rem",
     },
     h4: {
-      fontFamily: "Raleway , Roboto,helvetica",
+      fontFamily: "Montserrat , Roboto,helvetica",
       fontSize: "1.4rem",
     },
     h5: {
