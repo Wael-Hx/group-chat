@@ -2,6 +2,7 @@ import { makeStyles, Paper, PaperProps } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   sidebar: {
+    position: "relative",
     backgroundColor: (styleProps: PaperContainerProps) =>
       theme.palette.bg[styleProps.backgroundColor || "main"],
     width: ({ width }: any) => width ?? "auto",
