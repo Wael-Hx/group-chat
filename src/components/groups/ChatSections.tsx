@@ -3,7 +3,7 @@ import PaperContainer from "../styled/PaperContainer";
 import SyncIcon from "@material-ui/icons/Sync";
 import { GET_MEMBERS } from "../../gql/queries/communities";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
-import { chatMessagesTree, Contact } from "../../cache";
+import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
 import MembersList from "../communities/MembersList";
 
 const ChatSections = ({ description }: SectionProps) => {
@@ -11,6 +11,7 @@ const ChatSections = ({ description }: SectionProps) => {
     membersList: Contact[];
   }>(GET_MEMBERS);
   const chatState = useReactiveVar(chatMessagesTree);
+  const { user } = useReactiveVar(loggedUserVar);
 
   const getMembersList = () => {
     if (!chatState.activeSub.id) {
@@ -35,7 +36,7 @@ const ChatSections = ({ description }: SectionProps) => {
       <Typography variant="body1" gutterBottom>
         {description ?? "no description provided"}
       </Typography>
-      {chatState.activeSub.id ? (
+      {chatState.activeSub.id && user?.id === chatState.activeSub.modId ? (
         <Button variant="text">Add Members</Button>
       ) : null}
 

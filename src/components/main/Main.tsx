@@ -9,7 +9,7 @@ import AnimatedContainer from "../styled/AnimatedContainer";
 import PaperContainer from "../styled/PaperContainer";
 import Swipeable from "../styled/Swipeable";
 import Chat from "./Chat";
-import CommunitySideBar from "./CommunitySideBar";
+import CommunitySideBar from "../groups/CommunitySideBar";
 import Contacts from "../contacts/Contacts";
 
 const Main = () => {
