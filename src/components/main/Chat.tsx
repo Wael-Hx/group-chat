@@ -1,7 +1,10 @@
 import { useReactiveVar } from "@apollo/client";
 import { Typography } from "@material-ui/core";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import { chatMessagesTree, loggedUserVar } from "../../cache";
-import PaperContainer from "../styled/PaperContainer";
+import CustomIconButton from "../styled/buttons/CustomIconButton";
+import PaperContainer from "../styled/containers/PaperContainer";
 import IconInput from "./IconInput";
 import Msg from "./Msg";
 
@@ -9,7 +12,7 @@ const Chat = ({ currentChat, modId }: ChatProps) => {
   const chatState = useReactiveVar(chatMessagesTree);
   const { user } = useReactiveVar(loggedUserVar);
 
-  if (!currentChat) {
+  if (typeof currentChat === "undefined" || currentChat === null) {
     return (
       <div className="dev center">
         <h1>
@@ -28,9 +31,15 @@ const Chat = ({ currentChat, modId }: ChatProps) => {
         elevation={1}
         addClass="center fixed"
         center
+        style={{ justifyContent: "space-between" }}
       >
-        <Typography variant="h6">Chat /</Typography>
-        <Typography variant="h6">{chatState.activeSub.name}</Typography>
+        <CustomIconButton
+          icon={<PeopleAltIcon color="primary" fontSize="small" />}
+        />
+        <Typography variant="h6">Chat / {chatState.activeSub.name}</Typography>
+        <CustomIconButton
+          icon={<AccountCircleIcon color="primary" fontSize="small" />}
+        />
       </PaperContainer>
       <section className="scroll">
         {chatState.chats[currentChat]?.map((msg, idx) => (

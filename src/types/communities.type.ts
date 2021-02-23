@@ -1,5 +1,5 @@
 export interface CommunityTabsData {
-  id: number;
+  id: string;
   name: string;
   cover?: string;
   cover_image?: string;

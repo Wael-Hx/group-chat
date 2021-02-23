@@ -5,8 +5,8 @@ import { GET_MY_COMMUNITIES } from "../../gql/queries/communities";
 import { MYSUBS } from "../../gql/subscriptions/chat";
 import { CommunityTabsData } from "../../types/communities.type";
 import { ChatSubscriptionData } from "../../types/messages.type";
-import AnimatedContainer from "../styled/AnimatedContainer";
-import PaperContainer from "../styled/PaperContainer";
+import AnimatedContainer from "../styled/containers/AnimatedContainer";
+import PaperContainer from "../styled/containers/PaperContainer";
 import Swipeable from "../styled/Swipeable";
 import Chat from "./Chat";
 import CommunitySideBar from "../groups/CommunitySideBar";
@@ -30,7 +30,7 @@ const Main = () => {
 
   useSubscription<ChatSubscriptionData>(MYSUBS, {
     variables: {
-      mySubs: communityTabs.map((comm) => comm.name),
+      mySubs: communityTabs.map((comm) => comm.id),
     },
 
     onSubscriptionData({ subscriptionData }) {
@@ -103,7 +103,7 @@ const Main = () => {
         square
       >
         <Chat
-          currentChat={chatState.activeSub.name}
+          currentChat={chatState.activeSub.id}
           modId={chatState.activeSub.modId}
         />
       </PaperContainer>

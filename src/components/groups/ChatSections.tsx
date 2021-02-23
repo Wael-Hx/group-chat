@@ -1,11 +1,11 @@
 import { Button, Divider, Typography } from "@material-ui/core";
-import PaperContainer from "../styled/PaperContainer";
+import PaperContainer from "../styled/containers/PaperContainer";
 import SyncIcon from "@material-ui/icons/Sync";
 import { GET_MEMBERS } from "../../gql/queries/communities";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
 import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
-import MembersList from "../communities/MembersList";
-import DialogBox from "../styled/DialogBox";
+import MembersList from "./MembersList";
+import DialogBox from "../styled/popup/DialogBox";
 import { useState } from "react";
 import AddMembers from "./AddMembers";
 
@@ -20,7 +20,7 @@ const ChatSections = ({ description }: SectionProps) => {
   const { user } = useReactiveVar(loggedUserVar);
 
   const getMembersList = () => {
-    if (!chatState.activeSub.id) {
+    if (chatState.activeSub.id === "0") {
       return;
     }
     loadMembers({ variables: { groupId: chatState.activeSub.id } });
@@ -91,11 +91,11 @@ const ChatSections = ({ description }: SectionProps) => {
           />
         </div>
         <MembersList loading={loading} members={data?.membersList} />
-        {chatState.activeSub.id ? null : (
+        {chatState.activeSub.id === "0" ? (
           <Typography variant="h6" component="i">
             all users can see this chat
           </Typography>
-        )}
+        ) : null}
       </PaperContainer>
     </PaperContainer>
   );

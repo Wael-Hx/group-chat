@@ -42,7 +42,7 @@ export const communityTabsData = makeVar<CommunitiesData>({
   communityTabs: [
     {
       comm_admin: null,
-      id: 0,
+      id: "0",
       name: "General",
       description: "general chat for all users",
       cover_image:

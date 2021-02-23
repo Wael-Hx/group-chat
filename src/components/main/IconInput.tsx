@@ -55,7 +55,7 @@ const IconInput = () => {
         id: user?.id,
         username: user?.username,
         body: msgBody,
-        to: chatState.activeSub.name,
+        to: chatState.activeSub.id,
       },
     });
     setMsgBody("");
