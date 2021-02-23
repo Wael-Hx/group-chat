@@ -34,3 +34,9 @@ export const CREATE_GROUP = gql`
     }
   }
 `;
+
+export const ADD_MEMBERS = gql`
+  mutation AddMembers($groupId: ID!, $users: [ID!]!) {
+    addMembers(members: { groupId: $groupId, users: $users })
+  }
+`;
