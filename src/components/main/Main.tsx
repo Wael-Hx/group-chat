@@ -1,3 +1,4 @@
+import { KeyboardEvent, MouseEvent, useState } from "react";
 import { useQuery, useReactiveVar, useSubscription } from "@apollo/client";
 import { Divider, useMediaQuery } from "@material-ui/core";
 import { chatMessagesTree, communityTabsData } from "../../cache";
@@ -15,6 +16,37 @@ import Contacts from "../contacts/Contacts";
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
   const { communityTabs } = useReactiveVar(communityTabsData);
+
+  const [drawerState, setDrawerState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor: Anchor, open: boolean) => (
+    event: KeyboardEvent | MouseEvent
+  ) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      ((event as KeyboardEvent).key === "Tab" ||
+        (event as KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState({ ...drawerState, [anchor]: open });
+  };
+
+  //open drawer from nested components
+  const openDrawer = (anchor: Anchor, state: boolean) => {
+    //trigger only on small screens
+    if (!mobileScreen) {
+      return;
+    }
+    setDrawerState({ ...drawerState, [anchor]: state });
+  };
 
   useQuery<{ getMyCommunities: CommunityTabsData[] }>(GET_MY_COMMUNITIES, {
     onCompleted({ getMyCommunities }) {
@@ -71,7 +103,12 @@ const Main = () => {
       square
     >
       {mobileScreen ? (
-        <Swipeable anchor="left">
+        <Swipeable
+          anchor={"left"}
+          open={drawerState["left"]}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
+        >
           <PaperContainer
             width="100%"
             height="100%"
@@ -103,13 +140,19 @@ const Main = () => {
         square
       >
         <Chat
+          toggleAction={openDrawer}
           currentChat={chatState.activeSub.id}
           modId={chatState.activeSub.modId}
         />
       </PaperContainer>
       <Divider orientation="vertical" />
       {mobileScreen ? (
-        <Swipeable anchor="right">
+        <Swipeable
+          anchor={"right"}
+          open={drawerState["right"]}
+          onClose={toggleDrawer("right", false)}
+          onOpen={toggleDrawer("right", true)}
+        >
           <PaperContainer
             width="100%"
             height="100%"
@@ -140,3 +183,5 @@ const Main = () => {
 };
 
 export default Main;
+
+export type Anchor = "top" | "left" | "bottom" | "right";

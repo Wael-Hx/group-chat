@@ -6,9 +6,10 @@ import { chatMessagesTree, loggedUserVar } from "../../cache";
 import CustomIconButton from "../styled/buttons/CustomIconButton";
 import PaperContainer from "../styled/containers/PaperContainer";
 import IconInput from "./IconInput";
+import { Anchor } from "./Main";
 import Msg from "./Msg";
 
-const Chat = ({ currentChat, modId }: ChatProps) => {
+const Chat = ({ currentChat, modId, toggleAction }: ChatProps) => {
   const chatState = useReactiveVar(chatMessagesTree);
   const { user } = useReactiveVar(loggedUserVar);
 
@@ -34,10 +35,14 @@ const Chat = ({ currentChat, modId }: ChatProps) => {
         style={{ justifyContent: "space-between" }}
       >
         <CustomIconButton
+          disableFocusRipple
+          onClick={() => toggleAction("left", true)}
           icon={<PeopleAltIcon color="primary" fontSize="small" />}
         />
         <Typography variant="h6">Chat / {chatState.activeSub.name}</Typography>
         <CustomIconButton
+          disableFocusRipple
+          onClick={() => toggleAction("right", true)}
           icon={<AccountCircleIcon color="primary" fontSize="small" />}
         />
       </PaperContainer>
@@ -56,4 +61,5 @@ export default Chat;
 interface ChatProps {
   currentChat: string | null;
   modId: string | null;
+  toggleAction: (anchor: Anchor, state: boolean) => void;
 }
