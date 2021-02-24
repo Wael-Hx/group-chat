@@ -4,7 +4,7 @@ import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
-import StyledButton from "../styled/StyledButton";
+import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
 
 const Register: FC<RouteComponentProps> = ({ history }) => {

@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 500,
     },
   },
+  content: {
+    paddingTop: 0,
+  },
 }));
 
 const DialogBox = ({
@@ -43,7 +46,7 @@ const DialogBox = ({
         >
           <Typography variant="h4"> {title}</Typography>
         </DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent className={classes.content}>{children}</DialogContent>
         <DialogActions>
           <Button onClick={closeDialog}>Cancel</Button>
         </DialogActions>

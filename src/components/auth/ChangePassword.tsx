@@ -1,12 +1,12 @@
 import { CircularProgress, TextField } from "@material-ui/core";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import StyledButton from "../styled/StyledButton";
+import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
 import { loggedUserVar, UserVar } from "../../cache";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { CHANGE_PASSWORD, FORGOT_PASSWORD } from "../../gql/mutations/users";
-import AlertMessage from "../styled/AlertMessage";
+import AlertMessage from "../styled/popup/AlertMessage";
 import { isToken } from "../../utils/decodeJwt";
 
 const ChangePassword = () => {

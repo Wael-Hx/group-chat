@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import BackgroundImg from "../styled/BackgroundImg";
 import StyledAvatar from "../styled/StyledAvatar";
-import StyledTab from "../styled/StyledTab";
-import StyledTabs from "../styled/StyledTabs";
-import TabPanel from "../styled/TabPanel";
+import StyledTab from "../styled/tabs/StyledTab";
+import StyledTabs from "../styled/tabs/StyledTabs";
+import TabPanel from "../styled/tabs/TabPanel";
 import ChatSections from "./ChatSections";
 import PeopleIcon from "@material-ui/icons/People";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import { CommunitiesData } from "../../types/communities.type";
 import { chatMessagesTree } from "../../cache";
 import { Button, Divider, Tooltip } from "@material-ui/core";
-import DialogBox from "../styled/DialogBox";
+import DialogBox from "../styled/popup/DialogBox";
 import CreateGroup from "./CreateGroup";
 
 const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
@@ -99,12 +99,8 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
         <TabPanel key={comm.name} value={tab} index={idx}>
           <BackgroundImg
             height="20%"
-            cover={
-              comm.cover_image ||
-              `https://via.placeholder.com/700x400/202636/fff?text=${encodeURI(
-                comm.name
-              )}`
-            }
+            cover={comm.cover_image}
+            overlayContent={comm.name}
           />
           <ChatSections description={comm.description} />
         </TabPanel>

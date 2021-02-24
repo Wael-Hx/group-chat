@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { TextField } from "@material-ui/core";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { CREATE_GROUP } from "../../gql/mutations/chat";
-import StyledButton from "../styled/StyledButton";
+import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
 import { CommunityTabsData } from "../../types/communities.type";
 import { communityTabsData } from "../../cache";
@@ -62,7 +62,7 @@ const CreateGroup = ({ closeDialog }: GroupComponentProps) => {
       onSubmit={submitGroup}
       disableAnimation
       elevation={0}
-      padding="2px"
+      padding="5px 8px"
       width="100%"
     >
       <TextField

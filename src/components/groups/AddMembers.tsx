@@ -18,7 +18,7 @@ import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
 import { ADD_MEMBERS } from "../../gql/mutations/chat";
 import { GET_MEMBERS } from "../../gql/queries/communities";
 import ContactDetails from "../contacts/ContactDetails";
-import StyledButton from "../styled/StyledButton";
+import StyledButton from "../styled/buttons/StyledButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,7 +115,7 @@ const AddMembers = () => {
   if (loading) {
     return (
       <div className="center">
-        <CircularProgress color="primary" size="1.7rem" />
+        <CircularProgress color="primary" size="1.2rem" />
       </div>
     );
   }

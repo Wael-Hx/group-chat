@@ -2,9 +2,16 @@ import {
   IconButtonProps,
   IconButton,
   CircularProgress,
+  makeStyles,
 } from "@material-ui/core";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { ReactElement } from "react";
+
+const useStyles = makeStyles({
+  customButton: {
+    padding: "12px 25px",
+  },
+});
 
 const CustomIconButton = ({
   icon,
@@ -12,8 +19,9 @@ const CustomIconButton = ({
   success,
   ...rest
 }: IconButtonProps & CustomIconProps) => {
+  const classes = useStyles();
   return (
-    <IconButton {...rest}>
+    <IconButton classes={{ root: classes.customButton }} {...rest}>
       {spinner ? (
         <CircularProgress color="primary" size="inherit" />
       ) : success ? (
