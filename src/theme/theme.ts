@@ -13,6 +13,9 @@ export const theme = createMuiTheme({
       light: "#fafafa",
       dark: "#f5f5f5",
     },
+    bgSecondary: {
+      main: "#BFBDC1",
+    },
     text: {
       primary: "#121212",
     },
@@ -57,12 +60,14 @@ export const theme = createMuiTheme({
 declare module "@material-ui/core/styles/createPalette" {
   interface Palette {
     bg: Palette["primary"];
+    bgSecondary: Palette["primary"];
     userColor: Palette["primary"];
     membersColor: Palette["primary"];
     modColor: Palette["primary"];
   }
   interface PaletteOptions {
     bg: PaletteOptions["primary"];
+    bgSecondary: PaletteOptions["primary"];
     userColor: PaletteOptions["primary"];
     membersColor: PaletteOptions["primary"];
     modColor: PaletteOptions["primary"];

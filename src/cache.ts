@@ -45,8 +45,7 @@ export const communityTabsData = makeVar<CommunitiesData>({
       id: "0",
       name: "General",
       description: "general chat for all users",
-      cover_image:
-        "https://via.placeholder.com/700x400/202636/fff?text=General%20Section",
+      cover_image: undefined,
     },
   ],
 });
