@@ -5,8 +5,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 130,
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-around",
     padding: 5,
+    "& >:last-child": {
+      paddingInline: 10,
+    },
   },
 }));
 
