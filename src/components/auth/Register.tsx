@@ -1,11 +1,12 @@
 import { useMutation } from "@apollo/client";
-import { TextField } from "@material-ui/core";
+import { TextField, Tooltip, Typography } from "@material-ui/core";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
 import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
+import { randomAcountState } from "./randomAccounts";
 
 const Register: FC<RouteComponentProps> = ({ history }) => {
   const [signIn, setSignIn] = useState(true);
@@ -69,6 +70,11 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
         ? login({ variables: { email, password } })
         : register({ variables: { username, email, password } });
     }
+  };
+
+  const AnonymousLogin = () => {
+    loggedUserVar(randomAcountState);
+    history.push("/");
   };
   return (
     <section className="slide-overflow">
@@ -144,9 +150,19 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
             </p>
           </>
         ) : (
-          <Link className="link pointer" to="/reset-password">
-            Forgot your Password ?
-          </Link>
+          <Tooltip
+            title={`login with randomized account and limited features ,
+           nothing is saved on the server ,
+            and your account will be lost when you reload`}
+          >
+            <Typography
+              onClick={AnonymousLogin}
+              variant="caption"
+              className="pointer"
+            >
+              Generate a temporary account !
+            </Typography>
+          </Tooltip>
         )}
         <div>
           <StyledButton
