@@ -35,12 +35,14 @@ const Chat = ({ currentChat, modId, toggleAction }: ChatProps) => {
         style={{ justifyContent: "space-between" }}
       >
         <CustomIconButton
+          style={{ padding: "12px 20px" }}
           disableFocusRipple
           onClick={() => toggleAction("left", true)}
           icon={<PeopleAltIcon color="primary" fontSize="small" />}
         />
         <Typography variant="h6">Chat / {chatState.activeSub.name}</Typography>
         <CustomIconButton
+          style={{ padding: "12px 20px" }}
           disableFocusRipple
           onClick={() => toggleAction("right", true)}
           icon={<AccountCircleIcon color="primary" fontSize="small" />}
