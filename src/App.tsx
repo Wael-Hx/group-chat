@@ -1,7 +1,6 @@
 import "./App.css";
 import Register from "./components/auth/Register";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ChangePassword from "./components/auth/ChangePassword";
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import { loggedUserVar } from "./cache";
@@ -25,8 +24,6 @@ const App = () => {
     } else if (!data?.me && !loading) {
       loggedUserVar({
         ...loggedUserVar(),
-        isAuthenticated: false,
-        user: null,
         loading: false,
       });
     }
@@ -37,8 +34,6 @@ const App = () => {
       <Switch>
         <PrivateRoute exact path="/" component={Main} />
         <Route exact path="/auth" component={Register} />
-        <Route path="/reset-password/:token" component={ChangePassword} />
-        <Route exact path="/reset-password" component={ChangePassword} />
       </Switch>
     </Router>
   );
