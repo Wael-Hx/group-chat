@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { TextField, Tooltip, Typography } from "@material-ui/core";
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { loggedUserVar } from "../../cache";
+import { initialUserState, loggedUserVar } from "../../cache";
 import { LOGIN, REGISTER } from "../../gql/mutations/users";
 import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
@@ -21,7 +21,7 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     onCompleted({ login }) {
       if (login) {
         loggedUserVar({
-          ...loggedUserVar(),
+          ...initialUserState,
           isAuthenticated: true,
           user: login,
           loading: false,
@@ -37,12 +37,12 @@ const Register: FC<RouteComponentProps> = ({ history }) => {
     onCompleted({ register }) {
       if (register) {
         loggedUserVar({
-          ...loggedUserVar(),
+          ...initialUserState,
           isAuthenticated: true,
           user: register,
           loading: false,
         });
-        history.push("/profile");
+        history.push("/");
       }
     },
     onError({ message }) {
