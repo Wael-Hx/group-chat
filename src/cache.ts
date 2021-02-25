@@ -1,6 +1,7 @@
 import { InMemoryCache, makeVar } from "@apollo/client";
 import { CommunitiesData } from "./types/communities.type";
 import { ChatTree } from "./types/messages.type";
+import { UserVar } from "./types/users.types";
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -21,14 +22,13 @@ export const cache: InMemoryCache = new InMemoryCache({
   },
 });
 
-export const loggedUserVar = makeVar<UserVar>({
+export const initialUserState = {
   isAuthenticated: false,
   user: null,
   loading: true,
   contactList: [],
-});
-
-export const chatMessagesTree = makeVar<ChatTree>({
+};
+export const initialChatState = {
   tabIndex: 0,
   activeSub: {
     id: null,
@@ -36,9 +36,8 @@ export const chatMessagesTree = makeVar<ChatTree>({
     modId: null,
   },
   chats: {},
-});
-
-export const communityTabsData = makeVar<CommunitiesData>({
+};
+export const initialCommunitiesState = {
   communityTabs: [
     {
       comm_admin: null,
@@ -48,29 +47,9 @@ export const communityTabsData = makeVar<CommunitiesData>({
       cover_image: undefined,
     },
   ],
-});
-
-export interface User {
-  id: string;
-  username: string;
-  avatar: string;
-  email: string;
-  createdAt: string;
-}
-
-export interface Contact {
-  id: string;
-  username: string;
-  avatar?: string;
-}
-
-export interface UserVar {
-  isAuthenticated: boolean;
-  user: User | null;
-  loading?: boolean;
-  contactList: Contact[];
-}
-
-export interface UserData {
-  loggedUser: UserVar;
-}
+};
+export const loggedUserVar = makeVar<UserVar>(initialUserState);
+export const chatMessagesTree = makeVar<ChatTree>(initialChatState);
+export const communityTabsData = makeVar<CommunitiesData>(
+  initialCommunitiesState
+);
