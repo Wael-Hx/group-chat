@@ -15,7 +15,8 @@ import Contacts from "../contacts/Contacts";
 
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
-  const { communityTabs } = useReactiveVar(communityTabsData);
+  const communityTabsState = useReactiveVar(communityTabsData);
+  const { communityTabs } = communityTabsState;
 
   const [drawerState, setDrawerState] = useState({
     top: false,
@@ -51,9 +52,9 @@ const Main = () => {
   useQuery<{ getMyCommunities: CommunityTabsData[] }>(GET_MY_COMMUNITIES, {
     onCompleted({ getMyCommunities }) {
       communityTabsData({
-        ...communityTabsData(),
+        ...communityTabsState,
         communityTabs: [
-          ...communityTabsData().communityTabs,
+          ...communityTabsState.communityTabs,
           ...getMyCommunities,
         ],
       });
@@ -70,7 +71,7 @@ const Main = () => {
       if (data?.messages) {
         if (!chatState.chats[data.messages.sub]) {
           chatMessagesTree({
-            ...chatMessagesTree(),
+            ...chatState,
             chats: {
               ...chatState.chats,
               [data.messages.sub]: [data.messages],
@@ -78,9 +79,9 @@ const Main = () => {
           });
         } else {
           chatMessagesTree({
-            ...chatMessagesTree(),
+            ...chatState,
             chats: {
-              ...chatMessagesTree().chats,
+              ...chatState.chats,
               [data.messages.sub]: [
                 ...chatState.chats[data.messages.sub],
                 data.messages,

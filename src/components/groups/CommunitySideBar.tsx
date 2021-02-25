@@ -8,13 +8,16 @@ import ChatSections from "./ChatSections";
 import PeopleIcon from "@material-ui/icons/People";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import { CommunitiesData } from "../../types/communities.type";
-import { chatMessagesTree } from "../../cache";
+import { chatMessagesTree, loggedUserVar } from "../../cache";
 import { Button, Divider, Tooltip } from "@material-ui/core";
 import DialogBox from "../styled/popup/DialogBox";
 import CreateGroup from "./CreateGroup";
+import { useReactiveVar } from "@apollo/client";
 
 const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
-  const [tab, setTab] = useState(chatMessagesTree().tabIndex);
+  const chatState = useReactiveVar(chatMessagesTree);
+  const [tab, setTab] = useState(chatState.tabIndex);
+  const { isAuthenticated } = useReactiveVar(loggedUserVar);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -26,19 +29,22 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
   };
 
   useEffect(() => {
-    chatMessagesTree({
-      ...chatMessagesTree(),
-      activeSub: {
-        id: communityTabs[tab].id,
-        modId: communityTabs[tab].comm_admin,
-        name: communityTabs[tab].name,
-      },
-    });
-  }, [communityTabs, tab]);
+    //only set default tab on initial state and Component is mounted
+    if (isAuthenticated && chatState.activeSub.id === null) {
+      chatMessagesTree({
+        ...chatState,
+        activeSub: {
+          id: communityTabs[tab].id,
+          modId: communityTabs[tab].comm_admin,
+          name: communityTabs[tab].name,
+        },
+      });
+    }
+  }, [communityTabs, tab, isAuthenticated, chatState]);
 
   const changeTab = (_: any, newTab: number) => {
     chatMessagesTree({
-      ...chatMessagesTree(),
+      ...chatState,
       activeSub: {
         id: communityTabs[newTab].id,
         modId: communityTabs[newTab].comm_admin,

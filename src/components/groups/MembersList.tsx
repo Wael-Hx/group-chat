@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
-import { Contact } from "../../cache";
+import { Contact } from "../../types/users.types";
 import ContactDetails from "../contacts/ContactDetails";
 
 const useStyles = makeStyles((theme) => ({

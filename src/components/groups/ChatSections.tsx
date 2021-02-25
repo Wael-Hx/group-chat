@@ -3,11 +3,12 @@ import PaperContainer from "../styled/containers/PaperContainer";
 import SyncIcon from "@material-ui/icons/Sync";
 import { GET_MEMBERS } from "../../gql/queries/communities";
 import { useLazyQuery, useReactiveVar } from "@apollo/client";
-import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
+import { chatMessagesTree, loggedUserVar } from "../../cache";
 import MembersList from "./MembersList";
 import DialogBox from "../styled/popup/DialogBox";
 import { useState } from "react";
 import AddMembers from "./AddMembers";
+import { Contact } from "../../types/users.types";
 
 const ChatSections = ({ description }: SectionProps) => {
   const [loadMembers, { loading, data }] = useLazyQuery<{
@@ -20,7 +21,7 @@ const ChatSections = ({ description }: SectionProps) => {
   const { user } = useReactiveVar(loggedUserVar);
 
   const getMembersList = () => {
-    if (chatState.activeSub.id === "0") {
+    if (chatState.activeSub.id === "0" || user?.type === "anonymous") {
       return;
     }
     loadMembers({ variables: { groupId: chatState.activeSub.id } });

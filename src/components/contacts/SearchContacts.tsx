@@ -7,15 +7,17 @@ import {
   ListItem,
   ListItemSecondaryAction,
   makeStyles,
+  Typography,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Contact, loggedUserVar } from "../../cache";
+import { loggedUserVar } from "../../cache";
 import { SEARCH_CONTACTS } from "../../gql/queries/contacts";
 import CustomIconButton from "../styled/buttons/CustomIconButton";
 import ContactDetails from "./ContactDetails";
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
 import { ADD_CONTACT } from "../../gql/mutations/contacts";
+import { Contact } from "../../types/users.types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchContacts = () => {
   const classes = useStyles();
   const [search, setSearch] = useState("");
-  const { contactList } = useReactiveVar(loggedUserVar);
+  const { contactList, user } = useReactiveVar(loggedUserVar);
 
   const [getNewContacts, { loading, data }] = useLazyQuery<{
     contactList: Contact[];
@@ -81,6 +83,9 @@ const SearchContacts = () => {
 
   const searchContacts = (e: FormEvent) => {
     e.preventDefault();
+    if (user?.type === "anonymous") {
+      return;
+    }
     getNewContacts({ variables: { search } });
     setSearch("");
   };
@@ -106,6 +111,11 @@ const SearchContacts = () => {
       </form>
 
       <List dense className={classes.list}>
+        {user?.type === "anonymous" && (
+          <Typography color="error" variant="h6" component="i">
+            unavailable for temporary accounts!!
+          </Typography>
+        )}
         {data?.contactList.map((contact) => (
           <ListItem key={contact.id} button>
             <ContactDetails

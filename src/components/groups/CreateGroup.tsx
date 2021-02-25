@@ -1,13 +1,14 @@
-import { useMutation } from "@apollo/client";
-import { TextField } from "@material-ui/core";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { TextField, Typography } from "@material-ui/core";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { CREATE_GROUP } from "../../gql/mutations/chat";
 import StyledButton from "../styled/buttons/StyledButton";
 import StyledForm from "../styled/StyledForm";
 import { CommunityTabsData } from "../../types/communities.type";
-import { communityTabsData } from "../../cache";
+import { communityTabsData, loggedUserVar } from "../../cache";
 
 const CreateGroup = ({ closeDialog }: GroupComponentProps) => {
+  const { user } = useReactiveVar(loggedUserVar);
   const [group, setGroup] = useState({
     name: "",
     cover: "",
@@ -47,6 +48,9 @@ const CreateGroup = ({ closeDialog }: GroupComponentProps) => {
 
   const submitGroup = (e: FormEvent) => {
     e.preventDefault();
+    if (user?.type === "anonymous") {
+      return;
+    }
     createGroup({
       variables: {
         name,
@@ -105,6 +109,11 @@ const CreateGroup = ({ closeDialog }: GroupComponentProps) => {
         <StyledButton type="submit" disabled={loading} spinner={loading}>
           submit
         </StyledButton>
+        {user?.type === "anonymous" && (
+          <Typography color="error" variant="h6" component="i">
+            unavailable for temporary accounts!!
+          </Typography>
+        )}
       </div>
     </StyledForm>
   );

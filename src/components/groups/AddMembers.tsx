@@ -14,9 +14,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { chatMessagesTree, Contact, loggedUserVar } from "../../cache";
+import { chatMessagesTree, loggedUserVar } from "../../cache";
 import { ADD_MEMBERS } from "../../gql/mutations/chat";
 import { GET_MEMBERS } from "../../gql/queries/communities";
+import { Contact } from "../../types/users.types";
 import ContactDetails from "../contacts/ContactDetails";
 import StyledButton from "../styled/buttons/StyledButton";
 
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const AddMembers = () => {
   const classes = useStyles();
   const client = useApolloClient();
-  const { contactList } = useReactiveVar(loggedUserVar);
+  const { contactList, user } = useReactiveVar(loggedUserVar);
   const { activeSub } = useReactiveVar(chatMessagesTree);
   const [checkedMembers, setCheckedMembers] = useState<Contact[]>([]);
 
@@ -56,7 +57,7 @@ const AddMembers = () => {
     membersList: Contact[];
   }>(GET_MEMBERS, {
     variables: { groupId: activeSub.id },
-    skip: !!cachedMembers,
+    skip: !!cachedMembers || user?.type === "anonymous",
   });
 
   useEffect(() => {
