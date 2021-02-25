@@ -17,6 +17,11 @@ export const cache: InMemoryCache = new InMemoryCache({
             return communityTabsData();
           },
         },
+        chatMessagesTree: {
+          read() {
+            return chatMessagesTree();
+          },
+        },
       },
     },
   },
