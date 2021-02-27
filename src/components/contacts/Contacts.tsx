@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import {
   useApolloClient,
   useMutation,
   useQuery,
   useReactiveVar,
 } from "@apollo/client";
-import { Divider, IconButton, Tooltip, Typography } from "@material-ui/core";
+import {
+  Badge,
+  Divider,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import {
   loggedUserVar,
   initialChatState,
@@ -21,15 +27,32 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import DialogBox from "../styled/popup/DialogBox";
 import SearchContacts from "./SearchContacts";
 import { MY_CONTACTS } from "../../gql/queries/contacts";
-import { Contact } from "../../types/users.types";
+import { Contact, Notifications } from "../../types/users.types";
 import CustomIconButton from "../styled/buttons/CustomIconButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import { LOGOUT } from "../../gql/mutations/users";
 import { useHistory } from "react-router-dom";
+import NotificationsMenu from "./NotificationsMenu";
 
 const Contacts = () => {
-  const { user } = useReactiveVar(loggedUserVar);
+  const { user, count, notifications } = useReactiveVar(loggedUserVar);
+
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const resetNotifications = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    loggedUserVar({
+      ...loggedUserVar(),
+      count: 0,
+    });
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
   const client = useApolloClient();
   const history = useHistory();
 
@@ -43,15 +66,21 @@ const Contacts = () => {
     },
   });
 
-  useQuery<{ myContacts: Contact[] }>(MY_CONTACTS, {
-    skip: user?.type === "anonymous",
-    onCompleted({ myContacts }) {
-      loggedUserVar({
-        ...loggedUserVar(),
-        contactList: myContacts,
-      });
-    },
-  });
+  useQuery<{ myContacts: Contact[]; getNotifications: Notifications }>(
+    MY_CONTACTS,
+    {
+      skip: user?.type === "anonymous",
+      onCompleted({ myContacts, getNotifications: { sent, notifications } }) {
+        loggedUserVar({
+          ...loggedUserVar(),
+          contactList: myContacts,
+          sent,
+          notifications,
+          count: notifications.length,
+        });
+      },
+    }
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -60,7 +89,6 @@ const Contacts = () => {
   const openDialog = () => {
     setOpen(true);
   };
-
   const logoutUser = () => {
     if (window.confirm("logout ?")) {
       if (user?.type === "anonymous") {
@@ -74,9 +102,10 @@ const Contacts = () => {
       }
     }
   };
+
   return (
     <>
-      <PaperContainer width="70%" height="250px" elevation={2} topMargin="5px">
+      <PaperContainer width="60%" height="200px" elevation={2} topMargin="5px">
         <BackgroundImg cover={user?.avatar} overlayContent={user?.username} />
       </PaperContainer>
       <Typography variant="h5"> {user?.username} </Typography>
@@ -92,22 +121,59 @@ const Contacts = () => {
         height="50%"
         addClass="scroll"
       >
-        <Typography className="sticky" variant="h6" color="primary">
-          Contacts :
-        </Typography>
+        <section
+          className="sticky center"
+          style={{ justifyContent: "space-between" }}
+        >
+          <Typography variant="h6" color="primary">
+            Contacts :
+          </Typography>
+          <Badge
+            variant="dot"
+            overlap="circular"
+            badgeContent={count}
+            color="error"
+            anchorOrigin={{ horizontal: "left", vertical: "top" }}
+          >
+            <CustomIconButton
+              onClick={resetNotifications}
+              style={{ padding: "7px" }}
+              color="default"
+              spinner={loading}
+              icon={<NotificationsNoneIcon color="primary" fontSize="medium" />}
+            />
+          </Badge>
+          <NotificationsMenu
+            onClose={closeMenu}
+            notificationsContent={notifications}
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          />
+        </section>
+
         <ContactList />
 
         <CustomIconButton
-          style={{ position: "fixed", bottom: "12%", right: "20px" }}
+          style={{ position: "fixed", top: "170px", right: "15px" }}
           color="default"
           onClick={logoutUser}
           spinner={loading}
-          icon={<ExitToAppIcon style={{ fill: "#c71585" }} fontSize="medium" />}
+          icon={<ExitToAppIcon htmlColor="#c71585" fontSize="medium" />}
         />
 
         <IconButton
           onClick={openDialog}
-          style={{ position: "fixed", bottom: "5%", right: "20px" }}
+          style={{ position: "fixed", bottom: "50px", right: "15px" }}
           color="primary"
           edge="start"
         >
