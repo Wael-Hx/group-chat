@@ -50,8 +50,18 @@ export const theme = createMuiTheme({
       fontWeight: 600,
     },
     body1: {
-      fontFamily: " Roboto",
+      fontFamily: "Roboto , sans-serif",
       fontSize: "0.8rem",
+    },
+    subtitle1: {
+      fontFamily: "Roboto, sans-serif",
+      fontSize: "0.6rem",
+      fontWeight: "lighter",
+    },
+    subtitle2: {
+      fontFamily: "Roboto, sans-serif",
+      fontSize: "0.75rem",
+      fontWeight: "normal",
     },
     htmlFontSize: 16,
   },
