@@ -5,6 +5,7 @@ export const GET_MY_COMMUNITIES = gql`
     getMyCommunities {
       id
       name
+      description
       cover
       cover_image
       comm_admin
