@@ -4,20 +4,25 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import { ReactElement } from "react";
+import AssignmentLateIcon from "@material-ui/icons/AssignmentLate";
+import { ReactNode } from "react";
 
 const CustomIconButton = ({
   icon,
   spinner,
   success,
+  warn,
+  spinnerSize,
   ...rest
 }: IconButtonProps & CustomIconProps) => {
   return (
     <IconButton {...rest}>
       {spinner ? (
-        <CircularProgress color="primary" size="inherit" />
+        <CircularProgress color="primary" size={spinnerSize || "inherit"} />
       ) : success ? (
         <CheckBoxIcon style={{ fill: "green" }} />
+      ) : warn ? (
+        <AssignmentLateIcon htmlColor="#ffc400" />
       ) : (
         icon
       )}
@@ -28,7 +33,9 @@ const CustomIconButton = ({
 export default CustomIconButton;
 
 interface CustomIconProps {
-  icon: ReactElement;
+  icon: ReactNode;
   spinner?: boolean;
+  spinnerSize?: string;
   success?: boolean;
+  warn?: boolean;
 }
