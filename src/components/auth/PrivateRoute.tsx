@@ -3,10 +3,10 @@ import { FC } from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { useReactiveVar } from "@apollo/client";
 import { loggedUserVar } from "../../cache";
-import { UserVar } from "../../types/users.types";
+import { Notifications, UserVar } from "../../types/users.types";
 
 const PrivateRoute: FC<RouteProps> = ({ component, ...rest }) => {
-  const auth = useReactiveVar<UserVar>(loggedUserVar);
+  const auth = useReactiveVar<UserVar & Notifications>(loggedUserVar);
 
   if (auth.loading) {
     return (
