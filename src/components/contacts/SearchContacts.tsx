@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   ListItemSecondaryAction,
+  ListItemText,
   makeStyles,
   Typography,
 } from "@material-ui/core";
@@ -16,7 +17,7 @@ import { SEARCH_CONTACTS } from "../../gql/queries/contacts";
 import CustomIconButton from "../styled/buttons/CustomIconButton";
 import ContactDetails from "./ContactDetails";
 import LibraryAddIcon from "@material-ui/icons/LibraryAdd";
-import { ADD_CONTACT } from "../../gql/mutations/contacts";
+import { SEND_CONTACT_REQUEST } from "../../gql/mutations/contacts";
 import { Contact } from "../../types/users.types";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,22 +61,15 @@ const useStyles = makeStyles((theme) => ({
 const SearchContacts = () => {
   const classes = useStyles();
   const [search, setSearch] = useState("");
-  const { contactList, user } = useReactiveVar(loggedUserVar);
+  const { contactList, user, sent } = useReactiveVar(loggedUserVar);
 
   const [getNewContacts, { loading, data }] = useLazyQuery<{
     contactList: Contact[];
   }>(SEARCH_CONTACTS);
 
-  const [newContact, { loading: addingContactLoading }] = useMutation<{
-    newContact: Contact;
-  }>(ADD_CONTACT, {
-    onCompleted({ newContact }) {
-      loggedUserVar({
-        ...loggedUserVar(),
-        contactList: [...loggedUserVar().contactList, newContact],
-      });
-    },
-  });
+  const [sendContactRequest, { loading: sendingRequest }] = useMutation(
+    SEND_CONTACT_REQUEST
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -122,15 +116,39 @@ const SearchContacts = () => {
               username={contact.username}
               avatarUrl={contact.avatar}
             />
+            <ListItemText>
+              {sent.includes(contact.id) && (
+                <Typography variant="subtitle1" component="i" color="error">
+                  request sent
+                </Typography>
+              )}
+            </ListItemText>
             <ListItemSecondaryAction>
               <CustomIconButton
-                onClick={() =>
-                  newContact({ variables: { contact: contact.id } })
-                }
-                spinner={addingContactLoading}
+                onClick={() => {
+                  sendContactRequest({
+                    variables: {
+                      userId: user?.id,
+                      username: user?.username,
+                      avatar: user?.avatar || "",
+                      contactId: contact.id,
+                      contactName: contact.username,
+                      contactAvatar: contact.avatar || "",
+                    },
+                  });
+                  loggedUserVar({
+                    ...loggedUserVar(),
+                    sent: [...sent, contact.id],
+                  });
+                }}
+                spinner={sendingRequest}
                 size="small"
                 success={contactList.some((ct) => ct.id === contact.id)}
-                disabled={contactList.some((ct) => ct.id === contact.id)}
+                warn={sent.includes(contact.id)}
+                disabled={
+                  sent.includes(contact.id) ||
+                  contactList.some((ct) => ct.id === contact.id)
+                }
                 icon={<LibraryAddIcon color="primary" />}
               />
             </ListItemSecondaryAction>

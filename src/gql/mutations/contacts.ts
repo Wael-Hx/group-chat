@@ -9,3 +9,23 @@ export const ADD_CONTACT = gql`
     }
   }
 `;
+
+export const SEND_CONTACT_REQUEST = gql`
+  mutation SendContactRequest(
+    $userId: ID!
+    $username: String!
+    $avatar: String
+    $contactId: ID!
+    $contactName: String!
+    $contactAvatar: String
+  ) {
+    sendContactRequest(
+      from: { id: $userId, username: $username, avatar: $avatar }
+      contact: {
+        id: $contactId
+        username: $contactName
+        avatar: $contactAvatar
+      }
+    )
+  }
+`;

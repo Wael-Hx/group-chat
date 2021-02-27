@@ -7,6 +7,14 @@ export const MY_CONTACTS = gql`
       username
       avatar
     }
+    getNotifications {
+      sent
+      notifications {
+        username
+        id
+        avatar
+      }
+    }
   }
 `;
 

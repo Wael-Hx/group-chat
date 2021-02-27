@@ -1,7 +1,11 @@
 import { KeyboardEvent, MouseEvent, useState } from "react";
 import { useQuery, useReactiveVar, useSubscription } from "@apollo/client";
 import { Divider, useMediaQuery } from "@material-ui/core";
-import { chatMessagesTree, communityTabsData } from "../../cache";
+import {
+  chatMessagesTree,
+  communityTabsData,
+  loggedUserVar,
+} from "../../cache";
 import { GET_MY_COMMUNITIES } from "../../gql/queries/communities";
 import { MYSUBS } from "../../gql/subscriptions/chat";
 import { CommunityTabsData } from "../../types/communities.type";
@@ -16,6 +20,7 @@ import Contacts from "../contacts/Contacts";
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
   const communityTabsState = useReactiveVar(communityTabsData);
+  const { user, notifications, count } = useReactiveVar(loggedUserVar);
   const { communityTabs } = communityTabsState;
 
   const [drawerState, setDrawerState] = useState({
@@ -63,13 +68,19 @@ const Main = () => {
 
   useSubscription<ChatSubscriptionData>(MYSUBS, {
     variables: {
-      mySubs: communityTabs.map((comm) => comm.id),
+      mySubs: [user?.username, ...communityTabs.map((comm) => comm.id)],
     },
 
     onSubscriptionData({ subscriptionData }) {
       const { data } = subscriptionData;
       if (data?.messages) {
-        if (!chatState.chats[data.messages.sub]) {
+        if (data.messages.sub === user?.username) {
+          loggedUserVar({
+            ...loggedUserVar(),
+            notifications: [...notifications, data.messages],
+            count: count + 1,
+          });
+        } else if (!chatState.chats[data.messages.sub]) {
           chatMessagesTree({
             ...chatState,
             chats: {
