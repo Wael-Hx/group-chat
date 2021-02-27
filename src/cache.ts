@@ -1,7 +1,12 @@
 import { InMemoryCache, makeVar } from "@apollo/client";
 import { CommunitiesData } from "./types/communities.type";
 import { ChatTree } from "./types/messages.type";
-import { UserVar } from "./types/users.types";
+import {
+  Contact,
+  Notifications,
+  UserVar,
+  NotificationsContent,
+} from "./types/users.types";
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
@@ -31,7 +36,10 @@ export const initialUserState = {
   isAuthenticated: false,
   user: null,
   loading: true,
-  contactList: [],
+  contactList: [] as Contact[],
+  sent: [] as string[],
+  notifications: [] as NotificationsContent[],
+  count: 0,
 };
 export const initialChatState = {
   tabIndex: 0,
@@ -53,7 +61,7 @@ export const initialCommunitiesState = {
     },
   ],
 };
-export const loggedUserVar = makeVar<UserVar>(initialUserState);
+export const loggedUserVar = makeVar<UserVar & Notifications>(initialUserState);
 export const chatMessagesTree = makeVar<ChatTree>(initialChatState);
 export const communityTabsData = makeVar<CommunitiesData>(
   initialCommunitiesState
