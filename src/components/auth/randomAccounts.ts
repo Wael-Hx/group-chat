@@ -1,6 +1,6 @@
-import { UserVar } from "../../types/users.types";
+import { Notifications, UserVar } from "../../types/users.types";
 
-export const randomAcountState: UserVar = {
+export const randomAcountState: UserVar & Notifications = {
   isAuthenticated: true,
   user: {
     type: "anonymous",
@@ -12,4 +12,7 @@ export const randomAcountState: UserVar = {
   },
   loading: false,
   contactList: [],
+  sent: [],
+  notifications: [],
+  count: 0,
 };
