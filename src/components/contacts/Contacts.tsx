@@ -108,7 +108,7 @@ const Contacts = () => {
     <>
       <PaperContainer width="60%" height="200px" elevation={2} topMargin="5px">
         <BackgroundImg cover={user?.avatar} overlayContent={user?.username} />
-        <UpdateAvatar />
+        {user?.type === "anonymous" ? null : <UpdateAvatar />}
       </PaperContainer>
       <Typography variant="h5"> {user?.username} </Typography>
 
