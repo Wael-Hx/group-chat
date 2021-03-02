@@ -34,6 +34,7 @@ import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import { LOGOUT } from "../../gql/mutations/users";
 import { useHistory } from "react-router-dom";
 import NotificationsMenu from "./NotificationsMenu";
+import UpdateAvatar from "./UpdateAvatar";
 
 const Contacts = () => {
   const { user, count, notifications } = useReactiveVar(loggedUserVar);
@@ -107,6 +108,7 @@ const Contacts = () => {
     <>
       <PaperContainer width="60%" height="200px" elevation={2} topMargin="5px">
         <BackgroundImg cover={user?.avatar} overlayContent={user?.username} />
+        <UpdateAvatar />
       </PaperContainer>
       <Typography variant="h5"> {user?.username} </Typography>
 
