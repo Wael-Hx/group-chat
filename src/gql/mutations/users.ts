@@ -27,6 +27,15 @@ export const LOGOUT = gql`
   }
 `;
 
+export const UPDATE_AVATAR = gql`
+  mutation UpdateAvatar($newAvatar: String!) {
+    updateAvatar(newAvatar: $newAvatar) {
+      ...CurrentUser
+    }
+  }
+  ${UserFragment}
+`;
+
 export const FORGOT_PASSWORD = gql`
   mutation ForgotPassword($email: String!) {
     forgotPassword(email: $email)
