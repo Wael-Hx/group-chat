@@ -9,13 +9,15 @@ import {
 import { GET_MY_COMMUNITIES } from "../../gql/queries/communities";
 import { MYSUBS } from "../../gql/subscriptions/chat";
 import { CommunityTabsData } from "../../types/communities.type";
-import { ChatSubscriptionData } from "../../types/messages.type";
+import { ChatSubscriptionData, Message } from "../../types/messages.type";
 import AnimatedContainer from "../styled/containers/AnimatedContainer";
 import PaperContainer from "../styled/containers/PaperContainer";
 import Swipeable from "../styled/Swipeable";
 import Chat from "./Chat";
 import CommunitySideBar from "../groups/CommunitySideBar";
 import Contacts from "../contacts/Contacts";
+import { GET_MESSAGES } from "../../gql/queries/chat";
+import { formatMessages } from "../../utils/formatMessages";
 
 const Main = () => {
   const chatState = useReactiveVar(chatMessagesTree);
@@ -62,6 +64,28 @@ const Main = () => {
           ...communityTabsState.communityTabs,
           ...getMyCommunities,
         ],
+      });
+    },
+  });
+
+  useQuery<{ getMessages: Message[] }>(GET_MESSAGES, {
+    skip: user?.type === "anonymous",
+    fetchPolicy: "no-cache",
+    variables: {
+      subs: communityTabs.map((comm) => comm.id),
+    },
+    onCompleted({ getMessages }) {
+      if (getMessages.length === 0) {
+        return;
+      }
+      let myChats = formatMessages(getMessages);
+      console.log(myChats);
+      chatMessagesTree({
+        ...chatState,
+        chats: {
+          ...chatState.chats,
+          ...myChats,
+        },
       });
     },
   });
