@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import {
   ApolloClient,
@@ -8,19 +7,25 @@ import {
 } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { cache } from "./cache";
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
 import { theme } from "./theme/theme";
 import { getMainDefinition } from "@apollo/client/utilities";
 
-const URI: string = process.env.REACT_APP_GQL_URI as string;
-const WS: string = process.env.REACT_APP_GQL_WS as string;
+const nodeEnv = process.env.NODE_ENV as "development" | "production",
+  URI = process.env.REACT_APP_GQL_URI as string,
+  WS = process.env.REACT_APP_GQL_WS as string,
+  URI_DEV = process.env.REACT_APP_GQL_URI_DEV as string,
+  WS_DEV = process.env.REACT_APP_GQL_WS_DEV as string;
 
-const endpoint = createHttpLink({ uri: URI, credentials: "include" });
+const endpoint = createHttpLink({
+  uri: nodeEnv === "development" ? URI_DEV : URI,
+  credentials: "include",
+});
 
 const wsLink = new WebSocketLink({
-  uri: WS,
+  uri: nodeEnv === "development" ? WS_DEV : WS,
   options: {
     reconnect: true,
   },
@@ -53,8 +58,3 @@ ReactDOM.render(
 
   document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
