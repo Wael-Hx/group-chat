@@ -14,15 +14,17 @@ const useStyles = makeStyles((theme) => ({
 
 interface STProps extends TabsProps {
   topMargin?: string;
+  onTabChange: (_: any, newTab: number) => void;
 }
 
-const StyledTabs: FC<STProps> = ({ children, ...props }) => {
+const StyledTabs: FC<STProps> = ({ children, onTabChange, ...props }) => {
   const classes = useStyles({ topMargin: props.topMargin });
   return (
     <Tabs
       className={classes.tabs}
       classes={{ indicator: classes.indicator }}
       {...props}
+      onChange={onTabChange}
     >
       {children}
     </Tabs>

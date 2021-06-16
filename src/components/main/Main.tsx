@@ -32,20 +32,19 @@ const Main = () => {
     right: false,
   });
 
-  const toggleDrawer = (anchor: Anchor, open: boolean) => (
-    event: KeyboardEvent | MouseEvent
-  ) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      ((event as KeyboardEvent).key === "Tab" ||
-        (event as KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) => (event: KeyboardEvent | MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
 
-    setDrawerState({ ...drawerState, [anchor]: open });
-  };
+      setDrawerState({ ...drawerState, [anchor]: open });
+    };
 
   //open drawer from nested components
   const openDrawer = (anchor: Anchor, state: boolean) => {
@@ -79,7 +78,6 @@ const Main = () => {
         return;
       }
       let myChats = formatMessages(getMessages);
-      console.log(myChats);
       chatMessagesTree({
         ...chatState,
         chats: {

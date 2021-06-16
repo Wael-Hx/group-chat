@@ -60,9 +60,8 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
       <StyledTabs
         orientation="vertical"
         value={tab}
-        onChange={changeTab}
+        onTabChange={changeTab}
         variant="scrollable"
-        allowScrollButtonsMobile
         scrollButtons="auto"
       >
         {communityTabs.map((comm, idx) => (
@@ -75,7 +74,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
                 alt={comm.name}
                 size={8}
               >
-                {comm.cover ? null : <PeopleIcon fontSize="medium" />}
+                {comm.cover ? null : <PeopleIcon fontSize="default" />}
               </StyledAvatar>
             }
           />
@@ -85,7 +84,7 @@ const CommunitySideBar = ({ communityTabs }: CommunitiesData) => {
         <Button onClick={openDialog}>
           <StyledAvatar variant="rounded" size={8}>
             <Tooltip title="create a group">
-              <GroupAddIcon fontSize="medium" />
+              <GroupAddIcon fontSize="default" />
             </Tooltip>
           </StyledAvatar>
         </Button>

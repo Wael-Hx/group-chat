@@ -132,7 +132,7 @@ const Contacts = () => {
           </Typography>
           <Badge
             variant="dot"
-            overlap="circular"
+            overlap="circle"
             badgeContent={count}
             color="error"
             anchorOrigin={{ horizontal: "left", vertical: "top" }}
@@ -142,7 +142,7 @@ const Contacts = () => {
               style={{ padding: "7px" }}
               color="default"
               spinner={loading}
-              icon={<NotificationsNoneIcon color="primary" fontSize="medium" />}
+              icon={<NotificationsNoneIcon color="primary" fontSize="small" />}
             />
           </Badge>
           <NotificationsMenu
@@ -170,7 +170,7 @@ const Contacts = () => {
           color="default"
           onClick={logoutUser}
           spinner={loading}
-          icon={<ExitToAppIcon htmlColor="#c71585" fontSize="medium" />}
+          icon={<ExitToAppIcon htmlColor="#c71585" fontSize="small" />}
         />
 
         <IconButton
@@ -180,7 +180,7 @@ const Contacts = () => {
           edge="start"
         >
           <Tooltip title="search contacts">
-            <PersonAddIcon fontSize="medium" />
+            <PersonAddIcon fontSize="small" />
           </Tooltip>
         </IconButton>
 
