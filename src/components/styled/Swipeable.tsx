@@ -4,7 +4,7 @@ import {
   SwipeableDrawerProps,
 } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   paper: {
     width: "87vw",
   },
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "red",
     border: "1px solid red",
   },
-}));
+});
 
 const Swipeable = ({ children, ...rest }: SwipeableDrawerProps) => {
   const classes = useStyles();

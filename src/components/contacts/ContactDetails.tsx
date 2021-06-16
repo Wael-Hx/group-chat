@@ -1,6 +1,6 @@
 import { Avatar, AvatarProps, Typography, makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   contactContainer: {
     minWidth: 130,
     display: "flex",
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
       paddingInline: 10,
     },
   },
-}));
+});
 
 const ContactDetails = ({
   username,

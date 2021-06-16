@@ -1,7 +1,7 @@
 import { makeStyles, Paper, PaperProps, Grow } from "@material-ui/core";
 import { FC } from "react";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   container: {
     margin: ({ topMargin }: any) => `${topMargin || "auto"} auto auto auto`,
     width: ({ width }: any) => (width ? width : "auto"),
@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: ".8em",
     display: "flex",
   },
-}));
+});
 
 const AnimatedContainer: FC<AnimatedContainerProps> = ({
   children,

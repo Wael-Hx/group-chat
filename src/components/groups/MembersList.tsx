@@ -2,11 +2,11 @@ import { makeStyles, Typography } from "@material-ui/core";
 import { Contact } from "../../types/users.types";
 import ContactDetails from "../contacts/ContactDetails";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   contactList: {
     alignSelf: "flex-start",
   },
-}));
+});
 
 const MembersList = ({ loading, members }: MembersListProps) => {
   const classes = useStyles();

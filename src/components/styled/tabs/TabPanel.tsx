@@ -1,13 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 import { FC, ReactNode } from "react";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   tab: {
     paddingTop: 5,
     width: "75%",
     height: "100%",
   },
-}));
+});
 
 interface TabPanelProps {
   children?: ReactNode;
